@@ -1,18 +1,17 @@
-#include "DateTime.h"
+#include "DateTime.hpp"
 #include <ctime>
 
 static const int DaysInMonths[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
     30, 31 };
 
-static const int64_t TicksPerMillisecond = 10000;
-static const int64_t TicksPerSecond = TicksPerMillisecond * 1000;
-static const int64_t TicksPerMinute = TicksPerSecond * 60;
-static const int64_t TicksPerHour = TicksPerMinute * 60;
-static const int64_t TicksPerDay = TicksPerHour * 24;
 static const int64_t TicksPerYear = TicksPerDay * 365;
 static const int64_t TicksPerLeapYear = TicksPerDay * 366;
 
 DateTime::DateTime() : mTicks(0)
+{
+}
+
+DateTime::DateTime(int64_t inTicks) : mTicks(inTicks)
 {
 }
 
@@ -48,24 +47,20 @@ DateTime DateTime::Now()
     return outDateTime;
 }
 
-void DateTime::RemoveTime()
+void DateTime::SetTimeToMidnight()
 {
     mTicks /= TicksPerDay;
     mTicks *= TicksPerDay;
 }
 
-bool DateTime::Set(int inYear, int inMonth, int inDay)
-{
-    return Set(inYear, inMonth, inDay, 0, 0, 0);
-}
-
 bool DateTime::Set(int inYear, int inMonth, int inDay, int inHour, int inMinute,
-    int inSecond)
+    int inSecond, int inMillisecond)
 {
     bool outSuccess = false;
 
     if (inYear >= 1 && inYear <= 9999 && inHour >= 0 && inHour <= 23
-        && inMinute >= 0 && inMinute <= 59 && inSecond >= 0 && inSecond <= 59)
+        && inMinute >= 0 && inMinute <= 59 && inSecond >= 0 && inSecond <= 59
+        && inMillisecond >= 0 && inMillisecond <= 999)
     {
         int maxDays = DaysInMonth(inMonth, inYear);
 
@@ -92,12 +87,38 @@ bool DateTime::Set(int inYear, int inMonth, int inDay, int inHour, int inMinute,
             mTicks += inHour * TicksPerHour;
             mTicks += inMinute * TicksPerMinute;
             mTicks += inSecond * TicksPerSecond;
+            mTicks += inMillisecond * TicksPerMillisecond;
 
             outSuccess = true;
         }
     }
 
     return outSuccess;
+}
+
+void DateTime::AddDays(int64_t inDays)
+{
+    mTicks += inDays * TicksPerDay;
+}
+
+void DateTime::AddHours(int64_t inHours)
+{
+    mTicks += inHours * TicksPerHour;
+}
+
+void DateTime::AddMinutes(int64_t inMinutes)
+{
+    mTicks += inMinutes * TicksPerMinute;
+}
+
+void DateTime::AddSeconds(int64_t inSeconds)
+{
+    mTicks += inSeconds * TicksPerSecond;
+}
+
+void DateTime::AddMilliseconds(int64_t inMilliseconds)
+{
+    mTicks += inMilliseconds * TicksPerMillisecond;
 }
 
 int DateTime::DayOfWeek() const
@@ -191,6 +212,12 @@ int DateTime::Second() const
     return seconds % 60;
 }
 
+int DateTime::Millisecond() const
+{
+    int64_t milliseconds = mTicks / TicksPerMillisecond;
+    return milliseconds % 1000;
+}
+
 bool DateTime::operator==(const DateTime& inDateTime) const
 {
     return mTicks == inDateTime.mTicks;
@@ -219,6 +246,11 @@ bool DateTime::operator>(const DateTime& inDateTime) const
 bool DateTime::operator>=(const DateTime& inDateTime) const
 {
     return mTicks >= inDateTime.mTicks;
+}
+
+TimeSpan DateTime::operator-(const DateTime& inDateTime) const
+{
+    return TimeSpan(mTicks - inDateTime.mTicks);
 }
 
 int DateTime::DaysInMonth(int inMonth, int inYear)

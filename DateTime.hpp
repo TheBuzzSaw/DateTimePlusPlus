@@ -1,14 +1,17 @@
-#ifndef DATETIME_H
-#define DATETIME_H
+#ifndef DATETIME_HPP
+#define DATETIME_HPP
 
-#include <stdint.h>
+#include "TimeSpan.hpp"
 
 class DateTime
 {
     public:
         DateTime();
+        DateTime(int64_t inTicks);
         DateTime(const DateTime& inDateTime);
         ~DateTime();
+
+        inline int64_t Ticks() const { return mTicks; }
 
         DateTime& operator=(const DateTime& inDateTime);
         bool operator==(const DateTime& inDateTime) const;
@@ -17,13 +20,17 @@ class DateTime
         bool operator<=(const DateTime& inDateTime) const;
         bool operator>(const DateTime& inDateTime) const;
         bool operator>=(const DateTime& inDateTime) const;
+        TimeSpan operator-(const DateTime& inDateTime) const;
 
-        inline int64_t Ticks() const { return mTicks; }
+        void SetTimeToMidnight();
+        bool Set(int inYear = 1, int inMonth = 1, int inDay = 1, int inHour = 0,
+            int inMinute = 0, int inSecond = 0, int inMillisecond = 0);
 
-        void RemoveTime();
-        bool Set(int inYear, int inMonth, int inDay);
-        bool Set(int inYear, int inMonth, int inDay, int inHour, int inMinute,
-            int inSecond);
+        void AddDays(int64_t inDays);
+        void AddHours(int64_t inHours);
+        void AddMinutes(int64_t inMinutes);
+        void AddSeconds(int64_t inSeconds);
+        void AddMilliseconds(int64_t inMilliseconds);
 
         int DayOfWeek() const;
         int Year() const;
@@ -32,6 +39,7 @@ class DateTime
         int Hour() const;
         int Minute() const;
         int Second() const;
+        int Millisecond() const;
 
         static int DaysInMonth(int inMonth, int inYear = 1);
         static int DaysInYear(int inYear);
