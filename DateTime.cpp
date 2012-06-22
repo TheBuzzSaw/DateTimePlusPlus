@@ -23,12 +23,6 @@ DateTime::~DateTime()
 {
 }
 
-DateTime& DateTime::operator=(const DateTime& inDateTime)
-{
-    mTicks = inDateTime.mTicks;
-    return *this;
-}
-
 DateTime DateTime::Now()
 {
     time_t rawTime;
@@ -94,31 +88,6 @@ bool DateTime::Set(int inYear, int inMonth, int inDay, int inHour, int inMinute,
     }
 
     return outSuccess;
-}
-
-void DateTime::AddDays(int64_t inDays)
-{
-    mTicks += inDays * TicksPerDay;
-}
-
-void DateTime::AddHours(int64_t inHours)
-{
-    mTicks += inHours * TicksPerHour;
-}
-
-void DateTime::AddMinutes(int64_t inMinutes)
-{
-    mTicks += inMinutes * TicksPerMinute;
-}
-
-void DateTime::AddSeconds(int64_t inSeconds)
-{
-    mTicks += inSeconds * TicksPerSecond;
-}
-
-void DateTime::AddMilliseconds(int64_t inMilliseconds)
-{
-    mTicks += inMilliseconds * TicksPerMillisecond;
 }
 
 int DateTime::DayOfWeek() const
@@ -218,6 +187,24 @@ int DateTime::Millisecond() const
     return milliseconds % 1000;
 }
 
+DateTime& DateTime::operator=(const DateTime& inDateTime)
+{
+    mTicks = inDateTime.mTicks;
+    return *this;
+}
+
+DateTime& DateTime::operator+=(const TimeSpan& inTimeSpan)
+{
+    mTicks += inTimeSpan.Ticks();
+    return *this;
+}
+
+DateTime& DateTime::operator-=(const TimeSpan& inTimeSpan)
+{
+    mTicks -= inTimeSpan.Ticks();
+    return *this;
+}
+
 bool DateTime::operator==(const DateTime& inDateTime) const
 {
     return mTicks == inDateTime.mTicks;
@@ -246,6 +233,16 @@ bool DateTime::operator>(const DateTime& inDateTime) const
 bool DateTime::operator>=(const DateTime& inDateTime) const
 {
     return mTicks >= inDateTime.mTicks;
+}
+
+DateTime DateTime::operator+(const TimeSpan& inTimeSpan) const
+{
+    return DateTime(mTicks + inTimeSpan.Ticks());
+}
+
+DateTime DateTime::operator-(const TimeSpan& inTimeSpan) const
+{
+    return DateTime(mTicks - inTimeSpan.Ticks());
 }
 
 TimeSpan DateTime::operator-(const DateTime& inDateTime) const

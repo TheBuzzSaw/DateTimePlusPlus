@@ -14,23 +14,23 @@ class DateTime
         inline int64_t Ticks() const { return mTicks; }
 
         DateTime& operator=(const DateTime& inDateTime);
+        DateTime& operator+=(const TimeSpan& inTimeSpan);
+        DateTime& operator-=(const TimeSpan& inTimeSpan);
+
         bool operator==(const DateTime& inDateTime) const;
         bool operator!=(const DateTime& inDateTime) const;
         bool operator<(const DateTime& inDateTime) const;
         bool operator<=(const DateTime& inDateTime) const;
         bool operator>(const DateTime& inDateTime) const;
         bool operator>=(const DateTime& inDateTime) const;
+
+        DateTime operator+(const TimeSpan& inTimeSpan) const;
+        DateTime operator-(const TimeSpan& inTimeSpan) const;
         TimeSpan operator-(const DateTime& inDateTime) const;
 
         void SetTimeToMidnight();
-        bool Set(int inYear = 1, int inMonth = 1, int inDay = 1, int inHour = 0,
+        bool Set(int inYear, int inMonth, int inDay, int inHour = 0,
             int inMinute = 0, int inSecond = 0, int inMillisecond = 0);
-
-        void AddDays(int64_t inDays);
-        void AddHours(int64_t inHours);
-        void AddMinutes(int64_t inMinutes);
-        void AddSeconds(int64_t inSeconds);
-        void AddMilliseconds(int64_t inMilliseconds);
 
         int DayOfWeek() const;
         int Year() const;

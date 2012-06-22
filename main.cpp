@@ -15,16 +15,22 @@ int main(int argc, char** argv)
     cout << gap.Hours() << " hours\n";
     cout << gap.Minutes() << " minutes\n";
 
-    int day = a.DayOfWeek();
+    a += TimeSpan::Minutes(5);
 
+    int day = a.DayOfWeek();
     cout << DateTime::DayToString(day) << endl;
     cout << a.Year() << "-" << a.Month() << "-" << a.Day() << endl;
     cout << a.Hour() << ":" << a.Minute() << ":" << a.Second() << ":"
         << a.Millisecond() << endl;
 
     DateTime c;
-    c.Set();
+    c.Set(1, 1, 1);
     cout << c.Ticks() << endl;
+
+    DateTime minValue;
+
+    if (minValue == 0)
+        cout << "Yup, it's zero." << endl;
 
     return 0;
 }

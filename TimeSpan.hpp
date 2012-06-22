@@ -20,6 +20,9 @@ class TimeSpan
         inline int64_t Ticks() const { return mTicks; }
 
         TimeSpan& operator=(const TimeSpan& inTimeSpan);
+        TimeSpan& operator+=(const TimeSpan& inTimeSpan);
+        TimeSpan& operator-=(const TimeSpan& inTimeSpan);
+
         bool operator==(const TimeSpan& inTimeSpan);
         bool operator!=(const TimeSpan& inTimeSpan);
         bool operator<(const TimeSpan& inTimeSpan);
@@ -33,6 +36,13 @@ class TimeSpan
         int64_t Hours() const;
         int64_t Days() const;
         int64_t Weeks() const;
+
+        static TimeSpan Milliseconds(int64_t inMilliseconds);
+        static TimeSpan Seconds(int64_t inSeconds);
+        static TimeSpan Minutes(int64_t inMinutes);
+        static TimeSpan Hours(int64_t inHours);
+        static TimeSpan Days(int64_t inDays);
+        static TimeSpan Weeks(int64_t inWeeks);
 
     protected:
     private:
