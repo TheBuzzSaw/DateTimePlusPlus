@@ -3,7 +3,8 @@
 
 #include <stdint.h>
 
-const int64_t TicksPerMillisecond = 10000;
+const int64_t TicksPerMicrosecond = 10;
+const int64_t TicksPerMillisecond = TicksPerMicrosecond * 1000;
 const int64_t TicksPerSecond = TicksPerMillisecond * 1000;
 const int64_t TicksPerMinute = TicksPerSecond * 60;
 const int64_t TicksPerHour = TicksPerMinute * 60;
@@ -13,7 +14,8 @@ const int64_t TicksPerWeek = TicksPerDay * 7;
 class TimeSpan
 {
     public:
-        TimeSpan(int64_t inTicks = 0);
+        TimeSpan();
+        TimeSpan(int64_t inTicks);
         TimeSpan(const TimeSpan& inTimeSpan);
         ~TimeSpan();
 
@@ -30,6 +32,7 @@ class TimeSpan
         bool operator>(const TimeSpan& inTimeSpan);
         bool operator>=(const TimeSpan& inTimeSpan);
 
+        int64_t Microseconds() const;
         int64_t Milliseconds() const;
         int64_t Seconds() const;
         int64_t Minutes() const;
@@ -37,6 +40,7 @@ class TimeSpan
         int64_t Days() const;
         int64_t Weeks() const;
 
+        static TimeSpan Microseconds(int64_t inMicroseconds);
         static TimeSpan Milliseconds(int64_t inMilliseconds);
         static TimeSpan Seconds(int64_t inSeconds);
         static TimeSpan Minutes(int64_t inMinutes);

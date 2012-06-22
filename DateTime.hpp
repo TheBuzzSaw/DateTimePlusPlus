@@ -30,7 +30,8 @@ class DateTime
 
         void SetTimeToMidnight();
         bool Set(int inYear, int inMonth, int inDay, int inHour = 0,
-            int inMinute = 0, int inSecond = 0, int inMillisecond = 0);
+            int inMinute = 0, int inSecond = 0, int inMillisecond = 0,
+            int inMicrosecond = 0);
 
         int DayOfWeek() const;
         int Year() const;

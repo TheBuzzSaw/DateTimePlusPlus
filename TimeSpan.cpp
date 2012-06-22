@@ -1,12 +1,15 @@
 #include "TimeSpan.hpp"
 
+TimeSpan::TimeSpan() : mTicks(0)
+{
+}
+
 TimeSpan::TimeSpan(int64_t inTicks) : mTicks(inTicks)
 {
 }
 
-TimeSpan::TimeSpan(const TimeSpan& inTimeSpan)
+TimeSpan::TimeSpan(const TimeSpan& inTimeSpan) : mTicks(inTimeSpan.mTicks)
 {
-    mTicks = inTimeSpan.mTicks;
 }
 
 TimeSpan::~TimeSpan()
@@ -61,6 +64,11 @@ bool TimeSpan::operator>=(const TimeSpan& inTimeSpan)
     return mTicks >= inTimeSpan.mTicks;
 }
 
+int64_t TimeSpan::Microseconds() const
+{
+    return mTicks / TicksPerMicrosecond;
+}
+
 int64_t TimeSpan::Milliseconds() const
 {
     return mTicks / TicksPerMillisecond;
@@ -89,6 +97,11 @@ int64_t TimeSpan::Days() const
 int64_t TimeSpan::Weeks() const
 {
     return mTicks / TicksPerWeek;
+}
+
+TimeSpan TimeSpan::Microseconds(int64_t inMicroseconds)
+{
+    return inMicroseconds * TicksPerMicrosecond;
 }
 
 TimeSpan TimeSpan::Milliseconds(int64_t inMilliseconds)

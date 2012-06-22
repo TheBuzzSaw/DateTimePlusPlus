@@ -48,7 +48,7 @@ void DateTime::SetTimeToMidnight()
 }
 
 bool DateTime::Set(int inYear, int inMonth, int inDay, int inHour, int inMinute,
-    int inSecond, int inMillisecond)
+    int inSecond, int inMillisecond, int inMicrosecond)
 {
     bool outSuccess = false;
 
@@ -82,6 +82,7 @@ bool DateTime::Set(int inYear, int inMonth, int inDay, int inHour, int inMinute,
             mTicks += inMinute * TicksPerMinute;
             mTicks += inSecond * TicksPerSecond;
             mTicks += inMillisecond * TicksPerMillisecond;
+            mTicks += inMicrosecond * TicksPerMicrosecond;
 
             outSuccess = true;
         }
