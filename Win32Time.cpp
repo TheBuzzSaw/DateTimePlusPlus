@@ -1,4 +1,5 @@
 #include "DateTime.hpp"
+#include "TickSpans.hpp"
 #include <Windows.h>
 
 void Sleep(TimeSpan inTimeSpan)
