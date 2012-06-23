@@ -24,7 +24,7 @@ static TimeSpan timerBase;
 
 const TimeSpan RawTimer()
 {
-    return TimeSpan::Milliseconds(GetTickCount());
+    return TimeSpan::FromMilliseconds(GetTickCount());
 }
 
 void ResetTimer()
