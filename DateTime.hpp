@@ -53,4 +53,24 @@ class DateTime
         int64_t mTicks;
 };
 
+template<typename CharT, typename TraitsT>
+std::basic_ostream<CharT, TraitsT>& operator<<(
+    std::basic_ostream<CharT, TraitsT>& inStream, const DateTime& inDateTime)
+{
+    inStream << inDateTime.Year() << '-' << inDateTime.Month() << '-'
+        << inDateTime.Day() << ' ';
+
+    inStream << inDateTime.Hour() << ':';
+
+    int minute = inDateTime.Minute();
+    if (minute < 10) inStream << '0';
+    inStream << minute << ':';
+
+    int second = inDateTime.Second();
+    if (second < 10) inStream << '0';
+    inStream << second;
+
+    return inStream;
+}
+
 #endif

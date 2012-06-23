@@ -2,7 +2,9 @@
 #define TIMESPAN_HPP
 
 #include <stdint.h>
+#include <iostream>
 
+const int64_t NanosecondsPerTick = 100;
 const int64_t TicksPerMicrosecond = 10;
 const int64_t TicksPerMillisecond = TicksPerMicrosecond * 1000;
 const int64_t TicksPerSecond = TicksPerMillisecond * 1000;
@@ -52,5 +54,27 @@ class TimeSpan
     private:
         int64_t mTicks;
 };
+
+template<typename CharT, typename TraitsT>
+std::basic_ostream<CharT, TraitsT>& operator<<(
+    std::basic_ostream<CharT, TraitsT>& inStream, const TimeSpan& inTimeSpan)
+{
+    int64_t count = inTimeSpan.Weeks();
+    inStream << count << 'w';
+
+    count = inTimeSpan.Days() - inTimeSpan.Weeks() * 7;
+    inStream << count << 'd';
+
+    count = inTimeSpan.Hours() - inTimeSpan.Days() * 24;
+    inStream << count << 'h';
+
+    count = inTimeSpan.Minutes() - inTimeSpan.Hours() * 60;
+    inStream << count << 'm';
+
+    count = inTimeSpan.Seconds() - inTimeSpan.Minutes() * 60;
+    inStream << count << 's';
+
+    return inStream;
+}
 
 #endif

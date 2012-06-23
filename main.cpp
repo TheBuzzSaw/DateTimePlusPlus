@@ -1,6 +1,9 @@
 #include "DateTime.hpp"
+
 #include <iostream>
 using namespace std;
+
+DateTime GetNativeTime();
 
 int main(int argc, char** argv)
 {
@@ -12,25 +15,15 @@ int main(int argc, char** argv)
 
     TimeSpan gap = a - b;
 
-    cout << gap.Hours() << " hours\n";
-    cout << gap.Minutes() << " minutes\n";
+    cout << gap << endl;
 
     a += TimeSpan::Minutes(5);
 
     int day = a.DayOfWeek();
     cout << DateTime::DayToString(day) << endl;
-    cout << a.Year() << "-" << a.Month() << "-" << a.Day() << endl;
-    cout << a.Hour() << ":" << a.Minute() << ":" << a.Second() << ":"
-        << a.Millisecond() << endl;
+    cout << a << endl;
 
-    DateTime c;
-    c.Set(1, 1, 1);
-    cout << c.Ticks() << endl;
-
-    DateTime minValue;
-
-    if (minValue == 0)
-        cout << "Yup, it's zero." << endl;
+    cout << GetNativeTime() << endl;
 
     return 0;
 }
