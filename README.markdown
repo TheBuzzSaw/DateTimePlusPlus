@@ -2,8 +2,7 @@ DateTimePlusPlus
 ================
 
 This is a small C++ library designed to mimic the behavior of System.DateTime
-and System.TimeSpan from C#. It is not meant to be a precise port. (For example,
-the C# DateTime is immutable, but this C++ rendition is mutable.) Rather, the
+and System.TimeSpan from C#. It is not meant to be a precise port. Rather, the
 only standard is that the classes make use of the same 64-bit signed integer
 'ticks' value (representing 100-nanosecond intervals since January 1, 0001).
 
