@@ -37,14 +37,14 @@ class TimeSpan
         int64_t Days() const;
         int64_t Weeks() const;
 
-        static const TimeSpan Nanoseconds(int64_t inNanoseconds);
-        static const TimeSpan Microseconds(int64_t inMicroseconds);
-        static const TimeSpan Milliseconds(int64_t inMilliseconds);
-        static const TimeSpan Seconds(int64_t inSeconds);
-        static const TimeSpan Minutes(int64_t inMinutes);
-        static const TimeSpan Hours(int64_t inHours);
-        static const TimeSpan Days(int64_t inDays);
-        static const TimeSpan Weeks(int64_t inWeeks);
+        static const TimeSpan FromNanoseconds(int64_t inNanoseconds);
+        static const TimeSpan FromMicroseconds(int64_t inMicroseconds);
+        static const TimeSpan FromMilliseconds(int64_t inMilliseconds);
+        static const TimeSpan FromSeconds(int64_t inSeconds);
+        static const TimeSpan FromMinutes(int64_t inMinutes);
+        static const TimeSpan FromHours(int64_t inHours);
+        static const TimeSpan FromDays(int64_t inDays);
+        static const TimeSpan FromWeeks(int64_t inWeeks);
 
     protected:
     private:

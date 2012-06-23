@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     ResetTimer();
     cout << "size: " << sizeof(DateTime) << endl;
 
-    DateTime a = DateTime::Now();
+    DateTime a = DateTime::LocalTime();
     DateTime b = a;
     b.SetTimeToMidnight();
 
@@ -22,14 +22,14 @@ int main(int argc, char** argv)
 
     cout << gap << endl;
 
-    a += TimeSpan::Minutes(5);
+    a += TimeSpan::FromMinutes(5);
 
     int day = a.DayOfWeek();
     cout << DateTime::DayToString(day) << endl;
     cout << a << endl;
     cout << GetNativeTime() << endl;
 
-    Sleep(TimeSpan::Seconds(1));
+    Sleep(TimeSpan::FromSeconds(1));
     cout << ReadTimer() << endl;
 
     return 0;

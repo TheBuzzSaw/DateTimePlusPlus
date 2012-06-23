@@ -115,42 +115,42 @@ int64_t TimeSpan::Weeks() const
     return mTicks / TicksPerWeek;
 }
 
-const TimeSpan TimeSpan::Nanoseconds(int64_t inNanoseconds)
+const TimeSpan TimeSpan::FromNanoseconds(int64_t inNanoseconds)
 {
     return TimeSpan(inNanoseconds / NanosecondsPerTick);
 }
 
-const TimeSpan TimeSpan::Microseconds(int64_t inMicroseconds)
+const TimeSpan TimeSpan::FromMicroseconds(int64_t inMicroseconds)
 {
     return TimeSpan(inMicroseconds * TicksPerMicrosecond);
 }
 
-const TimeSpan TimeSpan::Milliseconds(int64_t inMilliseconds)
+const TimeSpan TimeSpan::FromMilliseconds(int64_t inMilliseconds)
 {
     return TimeSpan(inMilliseconds * TicksPerMillisecond);
 }
 
-const TimeSpan TimeSpan::Seconds(int64_t inSeconds)
+const TimeSpan TimeSpan::FromSeconds(int64_t inSeconds)
 {
     return TimeSpan(inSeconds * TicksPerSecond);
 }
 
-const TimeSpan TimeSpan::Minutes(int64_t inMinutes)
+const TimeSpan TimeSpan::FromMinutes(int64_t inMinutes)
 {
     return TimeSpan(inMinutes * TicksPerMinute);
 }
 
-const TimeSpan TimeSpan::Hours(int64_t inHours)
+const TimeSpan TimeSpan::FromHours(int64_t inHours)
 {
     return TimeSpan(inHours * TicksPerHour);
 }
 
-const TimeSpan TimeSpan::Days(int64_t inDays)
+const TimeSpan TimeSpan::FromDays(int64_t inDays)
 {
     return TimeSpan(inDays * TicksPerDay);
 }
 
-const TimeSpan TimeSpan::Weeks(int64_t inWeeks)
+const TimeSpan TimeSpan::FromWeeks(int64_t inWeeks)
 {
     return TimeSpan(inWeeks * TicksPerWeek);
 }

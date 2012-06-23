@@ -23,24 +23,6 @@ DateTime::~DateTime()
 {
 }
 
-DateTime DateTime::Now()
-{
-    time_t rawTime;
-    time(&rawTime);
-    tm* timeInfo = localtime(&rawTime);
-    int second = timeInfo->tm_sec;
-
-    // http://www.cplusplus.com/reference/clibrary/ctime/tm/
-    if (second > 59)
-        second = 59;
-
-    DateTime outDateTime;
-    outDateTime.Set(timeInfo->tm_year + 1900, timeInfo->tm_mon + 1,
-        timeInfo->tm_mday, timeInfo->tm_hour, timeInfo->tm_min, second);
-
-    return outDateTime;
-}
-
 void DateTime::SetTimeToMidnight()
 {
     mTicks /= TicksPerDay;
@@ -330,4 +312,22 @@ const char* DateTime::DayToString(int inDayOfWeek)
     }
 
     return outDayName;
+}
+
+const DateTime DateTime::LocalTime()
+{
+    time_t rawTime;
+    time(&rawTime);
+    tm* timeInfo = localtime(&rawTime);
+    int second = timeInfo->tm_sec;
+
+    // http://www.cplusplus.com/reference/clibrary/ctime/tm/
+    if (second > 59)
+        second = 59;
+
+    DateTime outDateTime;
+    outDateTime.Set(timeInfo->tm_year + 1900, timeInfo->tm_mon + 1,
+        timeInfo->tm_mday, timeInfo->tm_hour, timeInfo->tm_min, second);
+
+    return outDateTime;
 }

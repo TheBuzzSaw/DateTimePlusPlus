@@ -47,7 +47,7 @@ class DateTime
         static int DaysInYear(int inYear);
         static bool IsLeapYear(int inYear);
         static const char* DayToString(int inDayOfWeek);
-        static DateTime Now();
+        static const DateTime LocalTime();
 
     protected:
     private:
