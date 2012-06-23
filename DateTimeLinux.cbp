@@ -36,6 +36,7 @@
 		</Linker>
 		<Unit filename="DateTime.cpp" />
 		<Unit filename="DateTime.hpp" />
+		<Unit filename="TickSpans.hpp" />
 		<Unit filename="TimeSpan.cpp" />
 		<Unit filename="TimeSpan.hpp" />
 		<Unit filename="UnixTime.cpp" />

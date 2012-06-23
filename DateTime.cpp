@@ -1,11 +1,11 @@
 #include "DateTime.hpp"
+#include "TickSpans.hpp"
 #include <ctime>
 
 static const int DaysInMonths[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
     30, 31 };
 
 static const int64_t TicksPerYear = TicksPerDay * 365;
-static const int64_t TicksPerLeapYear = TicksPerDay * 366;
 
 DateTime::DateTime() : mTicks(0)
 {
@@ -236,17 +236,17 @@ bool DateTime::operator>=(const DateTime& inDateTime) const
     return mTicks >= inDateTime.mTicks;
 }
 
-DateTime DateTime::operator+(const TimeSpan& inTimeSpan) const
+const DateTime DateTime::operator+(const TimeSpan& inTimeSpan) const
 {
     return DateTime(mTicks + inTimeSpan.Ticks());
 }
 
-DateTime DateTime::operator-(const TimeSpan& inTimeSpan) const
+const DateTime DateTime::operator-(const TimeSpan& inTimeSpan) const
 {
     return DateTime(mTicks - inTimeSpan.Ticks());
 }
 
-TimeSpan DateTime::operator-(const DateTime& inDateTime) const
+const TimeSpan DateTime::operator-(const DateTime& inDateTime) const
 {
     return TimeSpan(mTicks - inDateTime.mTicks);
 }

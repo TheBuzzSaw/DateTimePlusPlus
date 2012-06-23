@@ -7,7 +7,7 @@ class DateTime
 {
     public:
         DateTime();
-        DateTime(int64_t inTicks);
+        explicit DateTime(int64_t inTicks);
         DateTime(const DateTime& inDateTime);
         ~DateTime();
 
@@ -24,9 +24,9 @@ class DateTime
         bool operator>(const DateTime& inDateTime) const;
         bool operator>=(const DateTime& inDateTime) const;
 
-        DateTime operator+(const TimeSpan& inTimeSpan) const;
-        DateTime operator-(const TimeSpan& inTimeSpan) const;
-        TimeSpan operator-(const DateTime& inDateTime) const;
+        const DateTime operator+(const TimeSpan& inTimeSpan) const;
+        const DateTime operator-(const TimeSpan& inTimeSpan) const;
+        const TimeSpan operator-(const DateTime& inDateTime) const;
 
         void SetTimeToMidnight();
         bool Set(int inYear, int inMonth, int inDay, int inHour = 0,

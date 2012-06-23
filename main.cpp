@@ -4,10 +4,10 @@
 using namespace std;
 
 void Sleep(TimeSpan inTimeSpan);
-DateTime GetNativeTime();
-TimeSpan RawTimer();
+const DateTime GetNativeTime();
+const TimeSpan RawTimer();
 void ResetTimer();
-TimeSpan ReadTimer();
+const TimeSpan ReadTimer();
 
 int main(int argc, char** argv)
 {

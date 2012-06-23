@@ -4,20 +4,11 @@
 #include <stdint.h>
 #include <iostream>
 
-const int64_t NanosecondsPerTick = 100;
-const int64_t TicksPerMicrosecond = 10;
-const int64_t TicksPerMillisecond = TicksPerMicrosecond * 1000;
-const int64_t TicksPerSecond = TicksPerMillisecond * 1000;
-const int64_t TicksPerMinute = TicksPerSecond * 60;
-const int64_t TicksPerHour = TicksPerMinute * 60;
-const int64_t TicksPerDay = TicksPerHour * 24;
-const int64_t TicksPerWeek = TicksPerDay * 7;
-
 class TimeSpan
 {
     public:
         TimeSpan();
-        TimeSpan(int64_t inTicks);
+        explicit TimeSpan(int64_t inTicks);
         TimeSpan(const TimeSpan& inTimeSpan);
         ~TimeSpan();
 
@@ -34,7 +25,9 @@ class TimeSpan
         bool operator>(const TimeSpan& inTimeSpan);
         bool operator>=(const TimeSpan& inTimeSpan);
 
+        const TimeSpan operator+(const TimeSpan& inTimeSpan) const;
         const TimeSpan operator-(const TimeSpan& inTimeSpan) const;
+        const TimeSpan operator-() const;
 
         int64_t Microseconds() const;
         int64_t Milliseconds() const;
@@ -44,13 +37,13 @@ class TimeSpan
         int64_t Days() const;
         int64_t Weeks() const;
 
-        static TimeSpan Microseconds(int64_t inMicroseconds);
-        static TimeSpan Milliseconds(int64_t inMilliseconds);
-        static TimeSpan Seconds(int64_t inSeconds);
-        static TimeSpan Minutes(int64_t inMinutes);
-        static TimeSpan Hours(int64_t inHours);
-        static TimeSpan Days(int64_t inDays);
-        static TimeSpan Weeks(int64_t inWeeks);
+        static const TimeSpan Microseconds(int64_t inMicroseconds);
+        static const TimeSpan Milliseconds(int64_t inMilliseconds);
+        static const TimeSpan Seconds(int64_t inSeconds);
+        static const TimeSpan Minutes(int64_t inMinutes);
+        static const TimeSpan Hours(int64_t inHours);
+        static const TimeSpan Days(int64_t inDays);
+        static const TimeSpan Weeks(int64_t inWeeks);
 
     protected:
     private:

@@ -1,4 +1,5 @@
 #include "TimeSpan.hpp"
+#include "TickSpans.hpp"
 
 TimeSpan::TimeSpan() : mTicks(0)
 {
@@ -64,9 +65,19 @@ bool TimeSpan::operator>=(const TimeSpan& inTimeSpan)
     return mTicks >= inTimeSpan.mTicks;
 }
 
+const TimeSpan TimeSpan::operator+(const TimeSpan& inTimeSpan) const
+{
+    return TimeSpan(mTicks + inTimeSpan.mTicks);
+}
+
 const TimeSpan TimeSpan::operator-(const TimeSpan& inTimeSpan) const
 {
-    return mTicks - inTimeSpan.mTicks;
+    return TimeSpan(mTicks - inTimeSpan.mTicks);
+}
+
+const TimeSpan TimeSpan::operator-() const
+{
+    return TimeSpan(-mTicks);
 }
 
 int64_t TimeSpan::Microseconds() const
@@ -104,37 +115,37 @@ int64_t TimeSpan::Weeks() const
     return mTicks / TicksPerWeek;
 }
 
-TimeSpan TimeSpan::Microseconds(int64_t inMicroseconds)
+const TimeSpan TimeSpan::Microseconds(int64_t inMicroseconds)
 {
-    return inMicroseconds * TicksPerMicrosecond;
+    return TimeSpan(inMicroseconds * TicksPerMicrosecond);
 }
 
-TimeSpan TimeSpan::Milliseconds(int64_t inMilliseconds)
+const TimeSpan TimeSpan::Milliseconds(int64_t inMilliseconds)
 {
-    return inMilliseconds * TicksPerMillisecond;
+    return TimeSpan(inMilliseconds * TicksPerMillisecond);
 }
 
-TimeSpan TimeSpan::Seconds(int64_t inSeconds)
+const TimeSpan TimeSpan::Seconds(int64_t inSeconds)
 {
-    return inSeconds * TicksPerSecond;
+    return TimeSpan(inSeconds * TicksPerSecond);
 }
 
-TimeSpan TimeSpan::Minutes(int64_t inMinutes)
+const TimeSpan TimeSpan::Minutes(int64_t inMinutes)
 {
-    return inMinutes * TicksPerMinute;
+    return TimeSpan(inMinutes * TicksPerMinute);
 }
 
-TimeSpan TimeSpan::Hours(int64_t inHours)
+const TimeSpan TimeSpan::Hours(int64_t inHours)
 {
-    return inHours * TicksPerHour;
+    return TimeSpan(inHours * TicksPerHour);
 }
 
-TimeSpan TimeSpan::Days(int64_t inDays)
+const TimeSpan TimeSpan::Days(int64_t inDays)
 {
-    return inDays * TicksPerDay;
+    return TimeSpan(inDays * TicksPerDay);
 }
 
-TimeSpan TimeSpan::Weeks(int64_t inWeeks)
+const TimeSpan TimeSpan::Weeks(int64_t inWeeks)
 {
-    return inWeeks * TicksPerWeek;
+    return TimeSpan(inWeeks * TicksPerWeek);
 }

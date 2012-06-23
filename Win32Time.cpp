@@ -6,7 +6,7 @@ void Sleep(TimeSpan inTimeSpan)
     Sleep(inTimeSpan.Milliseconds());
 }
 
-DateTime GetNativeTime()
+const DateTime GetNativeTime()
 {
     FILETIME fileTime;
     GetSystemTimeAsFileTime(&fileTime);
@@ -17,14 +17,14 @@ DateTime GetNativeTime()
     DateTime base;
     base.Set(1601, 1, 1);
 
-    return base + int64_t(result);
+    return base + TimeSpan(int64_t(result));
 }
 
 static TimeSpan timerBase;
 
-TimeSpan RawTimer()
+const TimeSpan RawTimer()
 {
-    return GetTickCount() * TicksPerMillisecond;
+    return TimeSpan(GetTickCount() * TicksPerMillisecond);
 }
 
 void ResetTimer()
@@ -32,7 +32,7 @@ void ResetTimer()
     timerBase = RawTimer();
 }
 
-TimeSpan ReadTimer()
+const TimeSpan ReadTimer()
 {
     return RawTimer() - timerBase;
 }
