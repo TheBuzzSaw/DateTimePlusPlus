@@ -1,5 +1,4 @@
 #include "DateTime.hpp"
-#include "TickSpans.hpp"
 #include <ctime>
 
 void Sleep(TimeSpan inTimeSpan)
@@ -12,13 +11,13 @@ const DateTime GetNativeTime()
     timespec ts;
     clock_gettime(CLOCK_REALTIME, &ts);
 
-    int64_t ticks = ts.tv_nsec / NanosecondsPerTick;
-    ticks += ts.tv_sec * TicksPerSecond;
+    int64_t nanoseconds = ts.tv_nsec;
+    nanoseconds += ts.tv_sec * 1000000000;
 
     DateTime epoch;
     epoch.Set(1970, 1, 1);
 
-    return epoch + TimeSpan(ticks);
+    return epoch + TimeSpan::Nanoseconds(nanoseconds);
 }
 
 static TimeSpan timerBase;
@@ -28,10 +27,10 @@ const TimeSpan RawTimer()
     timespec ts;
     clock_gettime(CLOCK_MONOTONIC_RAW, &ts);
 
-    int64_t ticks = ts.tv_nsec / NanosecondsPerTick;
-    ticks += ts.tv_sec * TicksPerSecond;
+    int64_t nanoseconds = ts.tv_nsec;
+    nanoseconds += ts.tv_sec * 1000000000;
 
-    return TimeSpan(ticks);
+    return TimeSpan::Nanoseconds(nanoseconds);
 }
 
 void ResetTimer()

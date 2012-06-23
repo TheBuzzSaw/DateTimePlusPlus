@@ -115,6 +115,11 @@ int64_t TimeSpan::Weeks() const
     return mTicks / TicksPerWeek;
 }
 
+const TimeSpan TimeSpan::Nanoseconds(int64_t inNanoseconds)
+{
+    return TimeSpan(inNanoseconds / NanosecondsPerTick);
+}
+
 const TimeSpan TimeSpan::Microseconds(int64_t inMicroseconds)
 {
     return TimeSpan(inMicroseconds * TicksPerMicrosecond);

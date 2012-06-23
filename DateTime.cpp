@@ -188,6 +188,12 @@ int DateTime::Millisecond() const
     return milliseconds % 1000;
 }
 
+int DateTime::Microsecond() const
+{
+    int64_t microseconds = mTicks / TicksPerMicrosecond;
+    return microseconds % 1000;
+}
+
 DateTime& DateTime::operator=(const DateTime& inDateTime)
 {
     mTicks = inDateTime.mTicks;

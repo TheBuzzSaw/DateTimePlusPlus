@@ -37,6 +37,7 @@ class TimeSpan
         int64_t Days() const;
         int64_t Weeks() const;
 
+        static const TimeSpan Nanoseconds(int64_t inNanoseconds);
         static const TimeSpan Microseconds(int64_t inMicroseconds);
         static const TimeSpan Milliseconds(int64_t inMilliseconds);
         static const TimeSpan Seconds(int64_t inSeconds);

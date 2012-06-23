@@ -41,6 +41,7 @@ class DateTime
         int Minute() const;
         int Second() const;
         int Millisecond() const;
+        int Microsecond() const;
 
         static int DaysInMonth(int inMonth, int inYear = 1);
         static int DaysInYear(int inYear);
