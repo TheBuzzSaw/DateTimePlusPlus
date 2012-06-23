@@ -3,10 +3,15 @@
 #include <iostream>
 using namespace std;
 
+void Sleep(TimeSpan inTimeSpan);
 DateTime GetNativeTime();
+TimeSpan RawTimer();
+void ResetTimer();
+TimeSpan ReadTimer();
 
 int main(int argc, char** argv)
 {
+    ResetTimer();
     cout << "size: " << sizeof(DateTime) << endl;
 
     DateTime a = DateTime::Now();
@@ -22,8 +27,10 @@ int main(int argc, char** argv)
     int day = a.DayOfWeek();
     cout << DateTime::DayToString(day) << endl;
     cout << a << endl;
-
     cout << GetNativeTime() << endl;
+
+    Sleep(TimeSpan::Seconds(1));
+    cout << ReadTimer() << endl;
 
     return 0;
 }

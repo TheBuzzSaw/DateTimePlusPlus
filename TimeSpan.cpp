@@ -64,6 +64,11 @@ bool TimeSpan::operator>=(const TimeSpan& inTimeSpan)
     return mTicks >= inTimeSpan.mTicks;
 }
 
+const TimeSpan TimeSpan::operator-(const TimeSpan& inTimeSpan) const
+{
+    return mTicks - inTimeSpan.mTicks;
+}
+
 int64_t TimeSpan::Microseconds() const
 {
     return mTicks / TicksPerMicrosecond;

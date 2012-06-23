@@ -34,6 +34,8 @@ class TimeSpan
         bool operator>(const TimeSpan& inTimeSpan);
         bool operator>=(const TimeSpan& inTimeSpan);
 
+        const TimeSpan operator-(const TimeSpan& inTimeSpan) const;
+
         int64_t Microseconds() const;
         int64_t Milliseconds() const;
         int64_t Seconds() const;
@@ -73,6 +75,12 @@ std::basic_ostream<CharT, TraitsT>& operator<<(
 
     count = inTimeSpan.Seconds() - inTimeSpan.Minutes() * 60;
     inStream << count << 's';
+
+    count = inTimeSpan.Milliseconds() - inTimeSpan.Seconds() * 1000;
+    inStream << count << "ms";
+
+    count = inTimeSpan.Microseconds() - inTimeSpan.Milliseconds() * 1000;
+    inStream << count << "us";
 
     return inStream;
 }
