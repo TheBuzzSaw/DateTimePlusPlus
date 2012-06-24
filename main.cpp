@@ -11,7 +11,6 @@ const TimeSpan ReadTimer();
 
 int main(int argc, char** argv)
 {
-    ResetTimer();
     cout << "size: " << sizeof(DateTime) << endl;
 
     DateTime a = DateTime::LocalTime();
@@ -29,6 +28,7 @@ int main(int argc, char** argv)
     cout << a << endl;
     cout << GetNativeTime() << endl;
 
+    ResetTimer();
     Sleep(TimeSpan::FromSeconds(1));
     cout << ReadTimer() << endl;
 

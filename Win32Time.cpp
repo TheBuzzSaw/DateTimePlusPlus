@@ -1,5 +1,7 @@
 #include "DateTime.hpp"
 #include <Windows.h>
+#include <iostream>
+using namespace std;
 
 void Sleep(TimeSpan inTimeSpan)
 {
@@ -21,14 +23,34 @@ const DateTime GetNativeTime()
 }
 
 static TimeSpan timerBase;
+static int64_t frequency = 0;
 
 const TimeSpan RawTimer()
 {
-    return TimeSpan::FromMilliseconds(GetTickCount());
+    TimeSpan outTimeSpan;
+
+    if (frequency > 0)
+    {
+        LARGE_INTEGER count;
+        QueryPerformanceCounter(&count);
+        int64_t microseconds = (count.QuadPart * 1000000) / frequency;
+        outTimeSpan = TimeSpan::FromMicroseconds(microseconds);
+    }
+    else
+    {
+        outTimeSpan = TimeSpan::FromMilliseconds(GetTickCount());
+    }
+
+    return outTimeSpan;
 }
 
 void ResetTimer()
 {
+    LARGE_INTEGER freq;
+    QueryPerformanceFrequency(&freq);
+    frequency = freq.QuadPart;
+    cout << "frequency: " << frequency << endl;
+
     timerBase = RawTimer();
 }
 

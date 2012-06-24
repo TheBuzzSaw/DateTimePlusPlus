@@ -23,6 +23,11 @@ DateTime::~DateTime()
 {
 }
 
+const TimeSpan DateTime::TimeSinceMidnight() const
+{
+    return TimeSpan(mTicks % TicksPerDay);
+}
+
 void DateTime::SetTimeToMidnight()
 {
     mTicks /= TicksPerDay;

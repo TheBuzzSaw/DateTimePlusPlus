@@ -28,6 +28,7 @@ class DateTime
         const DateTime operator-(const TimeSpan& inTimeSpan) const;
         const TimeSpan operator-(const DateTime& inDateTime) const;
 
+        const TimeSpan TimeSinceMidnight() const;
         void SetTimeToMidnight();
         bool Set(int inYear, int inMonth, int inDay, int inHour = 0,
             int inMinute = 0, int inSecond = 0, int inMillisecond = 0,
