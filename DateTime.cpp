@@ -1,8 +1,6 @@
 #include "DateTime.hpp"
 #include "TickSpans.hpp"
 #include <ctime>
-#include <iostream>
-using namespace std;
 
 static const int DaysInMonths[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
     30, 31 };
@@ -38,7 +36,7 @@ void DateTime::Validate()
 int64_t DateTime::ExtractYears(int64_t& inDays) const
 {
     int64_t outYear = 1;
-    --inDays;
+    bool oneShy = false;
 
     if (inDays >= DaysPerFourCenturies)
     {
@@ -46,6 +44,8 @@ int64_t DateTime::ExtractYears(int64_t& inDays) const
         outYear += chunks * 400;
         inDays -= chunks * DaysPerFourCenturies;
     }
+
+    if (inDays == DaysPerFourCenturies - 1) oneShy = true;
 
     if (inDays >= DaysPerCentury)
     {
@@ -61,6 +61,8 @@ int64_t DateTime::ExtractYears(int64_t& inDays) const
         inDays -= chunks * DaysPerFourYears;
     }
 
+    if (inDays == DaysPerFourYears - 1) oneShy = true;
+
     if (inDays >= DaysPerYear)
     {
         int64_t chunks = inDays / DaysPerYear;
@@ -68,7 +70,11 @@ int64_t DateTime::ExtractYears(int64_t& inDays) const
         inDays -= chunks * DaysPerYear;
     }
 
-    ++inDays;
+    if (inDays == 0 && oneShy)
+    {
+        inDays += 365;
+        --outYear;
+    }
 
     return outYear;
 }
@@ -103,40 +109,41 @@ bool DateTime::Set(int inYear, int inMonth, int inDay, int inHour, int inMinute,
 {
     bool outSuccess = false;
 
-    if (inYear >= 1 && inYear <= 9999 && inHour >= 0 && inHour <= 23
-        && inMinute >= 0 && inMinute <= 59 && inSecond >= 0 && inSecond <= 59
-        && inMillisecond >= 0 && inMillisecond <= 999)
+    if (inYear >= 1 && inYear <= 9999
+        && inDay >= 1 && inDay <= DaysInMonth(inMonth, inYear)
+        && inHour >= 0 && inHour <= 23
+        && inMinute >= 0 && inMinute <= 59
+        && inSecond >= 0 && inSecond <= 59
+        && inMillisecond >= 0 && inMillisecond <= 999
+        && inMicrosecond >= 0 && inMicrosecond <= 999)
     {
-        int maxDays = DaysInMonth(inMonth, inYear);
+        int64_t year = inYear - 1;
+        mTicks = year * TicksPerYear;
 
-        if (inDay > 0 && inDay <= maxDays)
+        int64_t chunks = year / 400;
+        int64_t leapYears = chunks * 97;
+        year -= chunks * 400;
+        chunks = year / 100;
+        leapYears += chunks * 24;
+        year -= chunks * 100;
+        chunks = year / 4;
+        leapYears += chunks;
+
+        mTicks += leapYears * TicksPerDay;
+
+        for (int i = 1; i < inMonth; ++i)
         {
-            mTicks = (inYear - 1) * TicksPerYear;
-
-            for (int i = 4; i < inYear; i += 4)
-            {
-                if (IsLeapYear(i))
-                    mTicks += TicksPerDay;
-            }
-
-            for (int i = 1; i < inMonth; ++i)
-            {
-                mTicks += DaysInMonth(i, inYear) * TicksPerDay;
-            }
-
-            for (int i = 1; i < inDay; ++i)
-            {
-                mTicks += TicksPerDay;
-            }
-
-            mTicks += inHour * TicksPerHour;
-            mTicks += inMinute * TicksPerMinute;
-            mTicks += inSecond * TicksPerSecond;
-            mTicks += inMillisecond * TicksPerMillisecond;
-            mTicks += inMicrosecond * TicksPerMicrosecond;
-
-            outSuccess = true;
+            mTicks += DaysInMonth(i, inYear) * TicksPerDay;
         }
+
+        mTicks += TicksPerDay * (inDay - 1);
+        mTicks += inHour * TicksPerHour;
+        mTicks += inMinute * TicksPerMinute;
+        mTicks += inSecond * TicksPerSecond;
+        mTicks += inMillisecond * TicksPerMillisecond;
+        mTicks += inMicrosecond * TicksPerMicrosecond;
+
+        outSuccess = true;
     }
 
     return outSuccess;

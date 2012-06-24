@@ -36,5 +36,16 @@ int main(int argc, char** argv)
     Sleep(TimeSpan::FromSeconds(1));
     cout << ReadTimer() << endl;
 
+    int year;
+    cin >> year;
+    while (year > 0)
+    {
+        DateTime test;
+        test.Set(year, 1, 1);
+        cout << test << " --> " << (test - TimeSpan::FromMicroseconds(1))
+            << endl;
+        cin >> year;
+    }
+
     return 0;
 }
