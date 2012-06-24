@@ -30,6 +30,7 @@ int main(int argc, char** argv)
 
     a.Set(2012, 12, 31);
     cout << "Dec 31, yes? " << a << endl;
+    cout << a.Ticks() << endl;
 
     ResetTimer();
     Sleep(TimeSpan::FromSeconds(1));

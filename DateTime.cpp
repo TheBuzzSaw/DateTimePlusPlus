@@ -1,11 +1,17 @@
 #include "DateTime.hpp"
 #include "TickSpans.hpp"
 #include <ctime>
+#include <iostream>
+using namespace std;
 
 static const int DaysInMonths[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
     30, 31 };
 
-static const int64_t TicksPerYear = TicksPerDay * 365;
+static const int64_t DaysPerYear = 365;
+static const int64_t TicksPerYear = TicksPerDay * DaysPerYear;
+static const int64_t DaysPerFourCenturies = DaysPerYear * 400 + 97;
+static const int64_t DaysPerCentury = DaysPerYear * 100 + 24;
+static const int64_t DaysPerFourYears = DaysPerYear * 4 + 1;
 
 DateTime::DateTime() : mTicks(0)
 {
@@ -27,6 +33,58 @@ DateTime::~DateTime()
 void DateTime::Validate()
 {
     if (mTicks < 0) mTicks = 0;
+}
+
+int64_t DateTime::ExtractYears(int64_t& inDays) const
+{
+    int64_t outYear = 1;
+    --inDays;
+
+    if (inDays >= DaysPerFourCenturies)
+    {
+        int64_t chunks = inDays / DaysPerFourCenturies;
+        outYear += chunks * 400;
+        inDays -= chunks * DaysPerFourCenturies;
+    }
+
+    if (inDays >= DaysPerCentury)
+    {
+        int64_t chunks = inDays / DaysPerCentury;
+        outYear += chunks * 100;
+        inDays -= chunks * DaysPerCentury;
+    }
+
+    if (inDays >= DaysPerFourYears)
+    {
+        int64_t chunks = inDays / DaysPerFourYears;
+        outYear += chunks * 4;
+        inDays -= chunks * DaysPerFourYears;
+    }
+
+    if (inDays >= DaysPerYear)
+    {
+        int64_t chunks = inDays / DaysPerYear;
+        outYear += chunks;
+        inDays -= chunks * DaysPerYear;
+    }
+
+    ++inDays;
+
+    return outYear;
+}
+
+int64_t DateTime::ExtractMonth(int64_t& inDays, int inYear) const
+{
+    int64_t outMonth = 1;
+
+    for (int64_t daysInMonth = DaysInMonth(outMonth, inYear);
+        inDays > daysInMonth; daysInMonth = DaysInMonth(outMonth, inYear))
+    {
+        ++outMonth;
+        inDays -= daysInMonth;
+    }
+
+    return outMonth;
 }
 
 const TimeSpan DateTime::TimeSinceMidnight() const
@@ -92,68 +150,21 @@ int DateTime::DayOfWeek() const
 int DateTime::Year() const
 {
     int64_t days = mTicks / TicksPerDay;
-    int64_t outYear = 1;
-    int64_t daysInYear = DaysInYear(outYear);
-
-    while (days >= daysInYear)
-    {
-        ++outYear;
-        days -= daysInYear;
-        daysInYear = DaysInYear(outYear);
-    }
-
-    return outYear;
+    return ExtractYears(days);
 }
 
 int DateTime::Month() const
 {
     int64_t days = mTicks / TicksPerDay;
-    int64_t year = 1;
-    int64_t daysInYear = DaysInYear(year);
-
-    while (days >= daysInYear)
-    {
-        ++year;
-        days -= daysInYear;
-        daysInYear = DaysInYear(year);
-    }
-
-    int64_t outMonth = 1;
-    int64_t daysInMonth = DaysInMonth(outMonth, year);
-
-    while (daysInMonth > 0 && days >= daysInMonth)
-    {
-        ++outMonth;
-        days -= daysInMonth;
-        daysInMonth = DaysInMonth(outMonth, year);
-    }
-
-    return outMonth;
+    int64_t year = ExtractYears(days);
+    return ExtractMonth(days, year);
 }
 
 int DateTime::Day() const
 {
     int64_t days = mTicks / TicksPerDay;
-    int64_t year = 1;
-    int64_t daysInYear = DaysInYear(year);
-
-    while (days >= daysInYear)
-    {
-        ++year;
-        days -= daysInYear;
-        daysInYear = DaysInYear(year);
-    }
-
-    int64_t month = 1;
-    int64_t daysInMonth = DaysInMonth(month, year);
-
-    while (daysInMonth > 0 && days >= daysInMonth)
-    {
-        ++month;
-        days -= daysInMonth;
-        daysInMonth = DaysInMonth(month, year);
-    }
-
+    int64_t year = ExtractYears(days);
+    ExtractMonth(days, year);
     return days + 1;
 }
 

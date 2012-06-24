@@ -53,6 +53,8 @@ class DateTime
     protected:
     private:
         void Validate();
+        int64_t ExtractYears(int64_t& inDays) const;
+        int64_t ExtractMonth(int64_t& inDays, int inYear) const;
 
         int64_t mTicks;
 };
