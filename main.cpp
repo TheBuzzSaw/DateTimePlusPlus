@@ -25,8 +25,11 @@ int main(int argc, char** argv)
 
     int day = a.DayOfWeek();
     cout << DateTime::DayToString(day) << endl;
-    cout << a << endl;
-    cout << GetNativeTime() << endl;
+    cout << "5 minutes from now: " << a << endl;
+    cout << "native UTC time: " << GetNativeTime() << endl;
+
+    a.Set(2012, 12, 31);
+    cout << "Dec 31, yes? " << a << endl;
 
     ResetTimer();
     Sleep(TimeSpan::FromSeconds(1));

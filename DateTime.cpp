@@ -13,6 +13,7 @@ DateTime::DateTime() : mTicks(0)
 
 DateTime::DateTime(int64_t inTicks) : mTicks(inTicks)
 {
+    Validate();
 }
 
 DateTime::DateTime(const DateTime& inDateTime) : mTicks(inDateTime.mTicks)
@@ -21,6 +22,11 @@ DateTime::DateTime(const DateTime& inDateTime) : mTicks(inDateTime.mTicks)
 
 DateTime::~DateTime()
 {
+}
+
+void DateTime::Validate()
+{
+    if (mTicks < 0) mTicks = 0;
 }
 
 const TimeSpan DateTime::TimeSinceMidnight() const
@@ -45,7 +51,7 @@ bool DateTime::Set(int inYear, int inMonth, int inDay, int inHour, int inMinute,
     {
         int maxDays = DaysInMonth(inMonth, inYear);
 
-        if (inDay > 0 && inDay < maxDays)
+        if (inDay > 0 && inDay <= maxDays)
         {
             mTicks = (inYear - 1) * TicksPerYear;
 
@@ -190,12 +196,14 @@ DateTime& DateTime::operator=(const DateTime& inDateTime)
 DateTime& DateTime::operator+=(const TimeSpan& inTimeSpan)
 {
     mTicks += inTimeSpan.Ticks();
+    Validate();
     return *this;
 }
 
 DateTime& DateTime::operator-=(const TimeSpan& inTimeSpan)
 {
     mTicks -= inTimeSpan.Ticks();
+    Validate();
     return *this;
 }
 

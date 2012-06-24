@@ -52,6 +52,8 @@ class DateTime
 
     protected:
     private:
+        void Validate();
+
         int64_t mTicks;
 };
 
