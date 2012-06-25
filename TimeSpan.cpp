@@ -35,32 +35,32 @@ TimeSpan& TimeSpan::operator-=(const TimeSpan& inTimeSpan)
     return *this;
 }
 
-bool TimeSpan::operator==(const TimeSpan& inTimeSpan)
+bool TimeSpan::operator==(const TimeSpan& inTimeSpan) const
 {
     return mTicks == inTimeSpan.mTicks;
 }
 
-bool TimeSpan::operator!=(const TimeSpan& inTimeSpan)
+bool TimeSpan::operator!=(const TimeSpan& inTimeSpan) const
 {
     return mTicks != inTimeSpan.mTicks;
 }
 
-bool TimeSpan::operator<(const TimeSpan& inTimeSpan)
+bool TimeSpan::operator<(const TimeSpan& inTimeSpan) const
 {
     return mTicks < inTimeSpan.mTicks;
 }
 
-bool TimeSpan::operator<=(const TimeSpan& inTimeSpan)
+bool TimeSpan::operator<=(const TimeSpan& inTimeSpan) const
 {
     return mTicks <= inTimeSpan.mTicks;
 }
 
-bool TimeSpan::operator>(const TimeSpan& inTimeSpan)
+bool TimeSpan::operator>(const TimeSpan& inTimeSpan) const
 {
     return mTicks > inTimeSpan.mTicks;
 }
 
-bool TimeSpan::operator>=(const TimeSpan& inTimeSpan)
+bool TimeSpan::operator>=(const TimeSpan& inTimeSpan) const
 {
     return mTicks >= inTimeSpan.mTicks;
 }

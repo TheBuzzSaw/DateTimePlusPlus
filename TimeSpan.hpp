@@ -18,12 +18,12 @@ class TimeSpan
         TimeSpan& operator+=(const TimeSpan& inTimeSpan);
         TimeSpan& operator-=(const TimeSpan& inTimeSpan);
 
-        bool operator==(const TimeSpan& inTimeSpan);
-        bool operator!=(const TimeSpan& inTimeSpan);
-        bool operator<(const TimeSpan& inTimeSpan);
-        bool operator<=(const TimeSpan& inTimeSpan);
-        bool operator>(const TimeSpan& inTimeSpan);
-        bool operator>=(const TimeSpan& inTimeSpan);
+        bool operator==(const TimeSpan& inTimeSpan) const;
+        bool operator!=(const TimeSpan& inTimeSpan) const;
+        bool operator<(const TimeSpan& inTimeSpan) const;
+        bool operator<=(const TimeSpan& inTimeSpan) const;
+        bool operator>(const TimeSpan& inTimeSpan) const;
+        bool operator>=(const TimeSpan& inTimeSpan) const;
 
         const TimeSpan operator+(const TimeSpan& inTimeSpan) const;
         const TimeSpan operator-(const TimeSpan& inTimeSpan) const;
