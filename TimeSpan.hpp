@@ -52,30 +52,30 @@ class TimeSpan
 
 template<typename CharT, typename TraitsT>
 std::basic_ostream<CharT, TraitsT>& operator<<(
-    std::basic_ostream<CharT, TraitsT>& inStream, const TimeSpan& timeSpan)
+    std::basic_ostream<CharT, TraitsT>& stream, const TimeSpan& timeSpan)
 {
     int64_t count = timeSpan.Weeks();
-    inStream << count << 'w';
+    stream << count << 'w';
 
     count = timeSpan.Days() - timeSpan.Weeks() * 7;
-    inStream << count << 'd';
+    stream << count << 'd';
 
     count = timeSpan.Hours() - timeSpan.Days() * 24;
-    inStream << count << 'h';
+    stream << count << 'h';
 
     count = timeSpan.Minutes() - timeSpan.Hours() * 60;
-    inStream << count << 'm';
+    stream << count << 'm';
 
     count = timeSpan.Seconds() - timeSpan.Minutes() * 60;
-    inStream << count << 's';
+    stream << count << 's';
 
     count = timeSpan.Milliseconds() - timeSpan.Seconds() * 1000;
-    inStream << count << "ms";
+    stream << count << "ms";
 
     count = timeSpan.Microseconds() - timeSpan.Milliseconds() * 1000;
-    inStream << count << "us";
+    stream << count << "us";
 
-    return inStream;
+    return stream;
 }
 
 #endif

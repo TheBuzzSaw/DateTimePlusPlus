@@ -64,22 +64,22 @@ class DateTime
 
 template<typename CharT, typename TraitsT>
 std::basic_ostream<CharT, TraitsT>& operator<<(
-    std::basic_ostream<CharT, TraitsT>& inStream, const DateTime& dateTime)
+    std::basic_ostream<CharT, TraitsT>& stream, const DateTime& dateTime)
 {
-    inStream << dateTime.Year() << '-' << dateTime.Month() << '-'
+    stream << dateTime.Year() << '-' << dateTime.Month() << '-'
         << dateTime.Day() << ' ';
 
-    inStream << dateTime.Hour() << ':';
+    stream << dateTime.Hour() << ':';
 
     int minute = dateTime.Minute();
-    if (minute < 10) inStream << '0';
-    inStream << minute << ':';
+    if (minute < 10) stream << '0';
+    stream << minute << ':';
 
     int second = dateTime.Second();
-    if (second < 10) inStream << '0';
-    inStream << second;
+    if (second < 10) stream << '0';
+    stream << second;
 
-    return inStream;
+    return stream;
 }
 
 #endif
