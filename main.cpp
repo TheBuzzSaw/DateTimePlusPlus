@@ -33,7 +33,7 @@ int main(int argc, char** argv)
     cout << a.Ticks() << endl;
 
     ResetTimer();
-    Sleep(TimeSpan::FromSeconds(1));
+    Sleep(TimeSpan::FromSeconds(2));
     cout << ReadTimer() << endl;
 
     return 0;

@@ -29,13 +29,14 @@ class TimeSpan
         const TimeSpan operator-(const TimeSpan& timeSpan) const;
         const TimeSpan operator-() const;
 
-        int64_t Microseconds() const;
-        int64_t Milliseconds() const;
-        int64_t Seconds() const;
-        int64_t Minutes() const;
-        int64_t Hours() const;
-        int64_t Days() const;
-        int64_t Weeks() const;
+        int64_t ToNanoseconds() const;
+        int64_t ToMicroseconds() const;
+        int64_t ToMilliseconds() const;
+        int64_t ToSeconds() const;
+        int64_t ToMinutes() const;
+        int64_t ToHours() const;
+        int64_t ToDays() const;
+        int64_t ToWeeks() const;
 
         static const TimeSpan FromNanoseconds(int64_t nanoseconds);
         static const TimeSpan FromMicroseconds(int64_t microseconds);
@@ -54,25 +55,25 @@ template<typename CharT, typename TraitsT>
 std::basic_ostream<CharT, TraitsT>& operator<<(
     std::basic_ostream<CharT, TraitsT>& stream, const TimeSpan& timeSpan)
 {
-    int64_t count = timeSpan.Weeks();
+    int64_t count = timeSpan.ToWeeks();
     stream << count << 'w';
 
-    count = timeSpan.Days() - timeSpan.Weeks() * 7;
+    count = timeSpan.ToDays() - timeSpan.ToWeeks() * 7;
     stream << count << 'd';
 
-    count = timeSpan.Hours() - timeSpan.Days() * 24;
+    count = timeSpan.ToHours() - timeSpan.ToDays() * 24;
     stream << count << 'h';
 
-    count = timeSpan.Minutes() - timeSpan.Hours() * 60;
+    count = timeSpan.ToMinutes() - timeSpan.ToHours() * 60;
     stream << count << 'm';
 
-    count = timeSpan.Seconds() - timeSpan.Minutes() * 60;
+    count = timeSpan.ToSeconds() - timeSpan.ToMinutes() * 60;
     stream << count << 's';
 
-    count = timeSpan.Milliseconds() - timeSpan.Seconds() * 1000;
+    count = timeSpan.ToMilliseconds() - timeSpan.ToSeconds() * 1000;
     stream << count << "ms";
 
-    count = timeSpan.Microseconds() - timeSpan.Milliseconds() * 1000;
+    count = timeSpan.ToMicroseconds() - timeSpan.ToMilliseconds() * 1000;
     stream << count << "us";
 
     return stream;

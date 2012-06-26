@@ -97,8 +97,8 @@ const TimeSpan DateTime::TimeSinceMidnight() const
 
 const DateTime DateTime::DateOnly() const
 {
-    int64_t ticks = _ticks / TicksPerDay;
-    return DateTime(ticks * TicksPerDay);
+    int64_t days = _ticks / TicksPerDay;
+    return DateTime(days * TicksPerDay);
 }
 
 bool DateTime::Set(int year, int month, int day, int hour, int minute,

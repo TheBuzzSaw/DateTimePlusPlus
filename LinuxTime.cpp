@@ -3,7 +3,7 @@
 
 void Sleep(TimeSpan timeSpan)
 {
-    usleep(timeSpan.Microseconds());
+    usleep(timeSpan.ToMicroseconds());
 }
 
 const DateTime GetNativeTime()
@@ -14,10 +14,7 @@ const DateTime GetNativeTime()
     int64_t nanoseconds = ts.tv_nsec;
     nanoseconds += ts.tv_sec * 1000000000;
 
-    DateTime epoch;
-    epoch.Set(1970, 1, 1);
-
-    return epoch + TimeSpan::FromNanoseconds(nanoseconds);
+    return DateTime(1970, 1, 1) + TimeSpan::FromNanoseconds(nanoseconds);
 }
 
 static TimeSpan timerBase;

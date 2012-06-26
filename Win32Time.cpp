@@ -5,7 +5,7 @@ using namespace std;
 
 void Sleep(TimeSpan timeSpan)
 {
-    Sleep(timeSpan.Milliseconds());
+    Sleep(timeSpan.ToMilliseconds());
 }
 
 const DateTime GetNativeTime()
@@ -16,10 +16,7 @@ const DateTime GetNativeTime()
     result <<= 32;
     result |= fileTime.dwLowDateTime;
 
-    DateTime base;
-    base.Set(1601, 1, 1);
-
-    return base + TimeSpan(result);
+    return DateTime(1601, 1, 1) + TimeSpan(result);
 }
 
 static TimeSpan timerBase;

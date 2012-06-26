@@ -80,37 +80,42 @@ const TimeSpan TimeSpan::operator-() const
     return TimeSpan(-_ticks);
 }
 
-int64_t TimeSpan::Microseconds() const
+int64_t TimeSpan::ToNanoseconds() const
+{
+    return _ticks * NanosecondsPerTick;
+}
+
+int64_t TimeSpan::ToMicroseconds() const
 {
     return _ticks / TicksPerMicrosecond;
 }
 
-int64_t TimeSpan::Milliseconds() const
+int64_t TimeSpan::ToMilliseconds() const
 {
     return _ticks / TicksPerMillisecond;
 }
 
-int64_t TimeSpan::Seconds() const
+int64_t TimeSpan::ToSeconds() const
 {
     return _ticks / TicksPerSecond;
 }
 
-int64_t TimeSpan::Minutes() const
+int64_t TimeSpan::ToMinutes() const
 {
     return _ticks / TicksPerMinute;
 }
 
-int64_t TimeSpan::Hours() const
+int64_t TimeSpan::ToHours() const
 {
     return _ticks / TicksPerHour;
 }
 
-int64_t TimeSpan::Days() const
+int64_t TimeSpan::ToDays() const
 {
     return _ticks / TicksPerDay;
 }
 
-int64_t TimeSpan::Weeks() const
+int64_t TimeSpan::ToWeeks() const
 {
     return _ticks / TicksPerWeek;
 }
