@@ -5,7 +5,6 @@ using namespace std;
 
 void Sleep(TimeSpan inTimeSpan);
 const DateTime GetNativeTime();
-const TimeSpan RawTimer();
 void ResetTimer();
 const TimeSpan ReadTimer();
 
@@ -35,17 +34,6 @@ int main(int argc, char** argv)
     ResetTimer();
     Sleep(TimeSpan::FromSeconds(1));
     cout << ReadTimer() << endl;
-
-    int year;
-    cin >> year;
-    while (year > 0)
-    {
-        DateTime test;
-        test.Set(year, 1, 1);
-        cout << test << " --> " << (test - TimeSpan::FromMicroseconds(1))
-            << endl;
-        cin >> year;
-    }
 
     return 0;
 }

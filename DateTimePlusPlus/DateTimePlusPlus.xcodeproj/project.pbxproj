@@ -1,0 +1,219 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6B2C93B61599311600895457 /* DateTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B2C93AF1599311600895457 /* DateTime.cpp */; };
+		6B2C93B71599311600895457 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B2C93B11599311600895457 /* main.cpp */; };
+		6B2C93B81599311600895457 /* TimeSpan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B2C93B31599311600895457 /* TimeSpan.cpp */; };
+		6B2C93BB159932DA00895457 /* OsxTime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B2C93BA159932DA00895457 /* OsxTime.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6B2C93A0159930B700895457 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		6B2C93A2159930B700895457 /* DateTimePlusPlus */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DateTimePlusPlus; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B2C93AF1599311600895457 /* DateTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DateTime.cpp; path = ../../DateTime.cpp; sourceTree = "<group>"; };
+		6B2C93B01599311600895457 /* DateTime.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = DateTime.hpp; path = ../../DateTime.hpp; sourceTree = "<group>"; };
+		6B2C93B11599311600895457 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../main.cpp; sourceTree = "<group>"; };
+		6B2C93B21599311600895457 /* TickSpans.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TickSpans.hpp; path = ../../TickSpans.hpp; sourceTree = "<group>"; };
+		6B2C93B31599311600895457 /* TimeSpan.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TimeSpan.cpp; path = ../../TimeSpan.cpp; sourceTree = "<group>"; };
+		6B2C93B41599311600895457 /* TimeSpan.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = TimeSpan.hpp; path = ../../TimeSpan.hpp; sourceTree = "<group>"; };
+		6B2C93BA159932DA00895457 /* OsxTime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OsxTime.cpp; path = ../../OsxTime.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6B2C939F159930B700895457 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6B2C9397159930B600895457 = {
+			isa = PBXGroup;
+			children = (
+				6B2C93A5159930B700895457 /* DateTimePlusPlus */,
+				6B2C93A3159930B700895457 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6B2C93A3159930B700895457 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6B2C93A2159930B700895457 /* DateTimePlusPlus */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6B2C93A5159930B700895457 /* DateTimePlusPlus */ = {
+			isa = PBXGroup;
+			children = (
+				6B2C93BA159932DA00895457 /* OsxTime.cpp */,
+				6B2C93AF1599311600895457 /* DateTime.cpp */,
+				6B2C93B01599311600895457 /* DateTime.hpp */,
+				6B2C93B11599311600895457 /* main.cpp */,
+				6B2C93B21599311600895457 /* TickSpans.hpp */,
+				6B2C93B31599311600895457 /* TimeSpan.cpp */,
+				6B2C93B41599311600895457 /* TimeSpan.hpp */,
+			);
+			path = DateTimePlusPlus;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6B2C93A1159930B700895457 /* DateTimePlusPlus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B2C93AC159930B700895457 /* Build configuration list for PBXNativeTarget "DateTimePlusPlus" */;
+			buildPhases = (
+				6B2C939E159930B700895457 /* Sources */,
+				6B2C939F159930B700895457 /* Frameworks */,
+				6B2C93A0159930B700895457 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DateTimePlusPlus;
+			productName = DateTimePlusPlus;
+			productReference = 6B2C93A2159930B700895457 /* DateTimePlusPlus */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6B2C9399159930B600895457 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 6B2C939C159930B600895457 /* Build configuration list for PBXProject "DateTimePlusPlus" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6B2C9397159930B600895457;
+			productRefGroup = 6B2C93A3159930B700895457 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6B2C93A1159930B700895457 /* DateTimePlusPlus */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6B2C939E159930B700895457 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B2C93B61599311600895457 /* DateTime.cpp in Sources */,
+				6B2C93B71599311600895457 /* main.cpp in Sources */,
+				6B2C93B81599311600895457 /* TimeSpan.cpp in Sources */,
+				6B2C93BB159932DA00895457 /* OsxTime.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		6B2C93AA159930B700895457 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		6B2C93AB159930B700895457 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		6B2C93AD159930B700895457 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		6B2C93AE159930B700895457 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6B2C939C159930B600895457 /* Build configuration list for PBXProject "DateTimePlusPlus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B2C93AA159930B700895457 /* Debug */,
+				6B2C93AB159930B700895457 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6B2C93AC159930B700895457 /* Build configuration list for PBXNativeTarget "DateTimePlusPlus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6B2C93AD159930B700895457 /* Debug */,
+				6B2C93AE159930B700895457 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6B2C9399159930B600895457 /* Project object */;
+}
