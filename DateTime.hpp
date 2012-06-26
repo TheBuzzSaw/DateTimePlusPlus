@@ -7,32 +7,35 @@ class DateTime
 {
     public:
         DateTime();
-        explicit DateTime(int64_t inTicks);
-        DateTime(const DateTime& inDateTime);
+        explicit DateTime(int64_t ticks);
+        DateTime(int year, int month, int day, int hour = 0, int minute = 0,
+            int second = 0, int millisecond = 0, int microsecond = 0);
+        DateTime(const DateTime& dateTime);
         ~DateTime();
 
-        inline int64_t Ticks() const { return mTicks; }
+        inline int64_t Ticks() const { return _ticks; }
+        inline operator bool() const { return _ticks > 0; }
 
-        DateTime& operator=(const DateTime& inDateTime);
-        DateTime& operator+=(const TimeSpan& inTimeSpan);
-        DateTime& operator-=(const TimeSpan& inTimeSpan);
+        DateTime& operator=(const DateTime& dateTime);
+        DateTime& operator+=(const TimeSpan& timeSpan);
+        DateTime& operator-=(const TimeSpan& timeSpan);
 
-        bool operator==(const DateTime& inDateTime) const;
-        bool operator!=(const DateTime& inDateTime) const;
-        bool operator<(const DateTime& inDateTime) const;
-        bool operator<=(const DateTime& inDateTime) const;
-        bool operator>(const DateTime& inDateTime) const;
-        bool operator>=(const DateTime& inDateTime) const;
+        bool operator==(const DateTime& dateTime) const;
+        bool operator!=(const DateTime& dateTime) const;
+        bool operator<(const DateTime& dateTime) const;
+        bool operator<=(const DateTime& dateTime) const;
+        bool operator>(const DateTime& dateTime) const;
+        bool operator>=(const DateTime& dateTime) const;
 
-        const DateTime operator+(const TimeSpan& inTimeSpan) const;
-        const DateTime operator-(const TimeSpan& inTimeSpan) const;
-        const TimeSpan operator-(const DateTime& inDateTime) const;
+        const DateTime operator+(const TimeSpan& timeSpan) const;
+        const DateTime operator-(const TimeSpan& timeSpan) const;
+        const TimeSpan operator-(const DateTime& dateTime) const;
 
         const TimeSpan TimeSinceMidnight() const;
-        void SetTimeToMidnight();
-        bool Set(int inYear, int inMonth, int inDay, int inHour = 0,
-            int inMinute = 0, int inSecond = 0, int inMillisecond = 0,
-            int inMicrosecond = 0);
+        const DateTime DateOnly() const;
+        bool Set(int year, int month, int day, int hour = 0,
+            int minute = 0, int second = 0, int millisecond = 0,
+            int microsecond = 0);
 
         int DayOfWeek() const;
         int Year() const;
@@ -44,35 +47,35 @@ class DateTime
         int Millisecond() const;
         int Microsecond() const;
 
-        static int DaysInMonth(int inMonth, int inYear = 1);
-        static int DaysInYear(int inYear);
-        static bool IsLeapYear(int inYear);
-        static const char* DayToString(int inDayOfWeek);
+        static int DaysInMonth(int month, int year = 1);
+        static int DaysInYear(int year);
+        static bool IsLeapYear(int year);
+        static const char* DayToString(int dayOfWeek);
         static const DateTime LocalTime();
+        static const DateTime UtcTime();
 
-    protected:
     private:
         void Validate();
-        int64_t ExtractYears(int64_t& inDays) const;
-        int64_t ExtractMonth(int64_t& inDays, int inYear) const;
+        int64_t ExtractYears(int64_t& days) const;
+        int64_t ExtractMonth(int64_t& days, int year) const;
 
-        int64_t mTicks;
+        int64_t _ticks;
 };
 
 template<typename CharT, typename TraitsT>
 std::basic_ostream<CharT, TraitsT>& operator<<(
-    std::basic_ostream<CharT, TraitsT>& inStream, const DateTime& inDateTime)
+    std::basic_ostream<CharT, TraitsT>& inStream, const DateTime& dateTime)
 {
-    inStream << inDateTime.Year() << '-' << inDateTime.Month() << '-'
-        << inDateTime.Day() << ' ';
+    inStream << dateTime.Year() << '-' << dateTime.Month() << '-'
+        << dateTime.Day() << ' ';
 
-    inStream << inDateTime.Hour() << ':';
+    inStream << dateTime.Hour() << ':';
 
-    int minute = inDateTime.Minute();
+    int minute = dateTime.Minute();
     if (minute < 10) inStream << '0';
     inStream << minute << ':';
 
-    int second = inDateTime.Second();
+    int second = dateTime.Second();
     if (second < 10) inStream << '0';
     inStream << second;
 

@@ -1,15 +1,15 @@
 #include "TimeSpan.hpp"
 #include "TickSpans.hpp"
 
-TimeSpan::TimeSpan() : mTicks(0)
+TimeSpan::TimeSpan() : _ticks(0)
 {
 }
 
-TimeSpan::TimeSpan(int64_t inTicks) : mTicks(inTicks)
+TimeSpan::TimeSpan(int64_t ticks) : _ticks(ticks)
 {
 }
 
-TimeSpan::TimeSpan(const TimeSpan& inTimeSpan) : mTicks(inTimeSpan.mTicks)
+TimeSpan::TimeSpan(const TimeSpan& timeSpan) : _ticks(timeSpan._ticks)
 {
 }
 
@@ -17,140 +17,140 @@ TimeSpan::~TimeSpan()
 {
 }
 
-TimeSpan& TimeSpan::operator=(const TimeSpan& inTimeSpan)
+TimeSpan& TimeSpan::operator=(const TimeSpan& timeSpan)
 {
-    mTicks = inTimeSpan.mTicks;
+    _ticks = timeSpan._ticks;
     return *this;
 }
 
-TimeSpan& TimeSpan::operator+=(const TimeSpan& inTimeSpan)
+TimeSpan& TimeSpan::operator+=(const TimeSpan& timeSpan)
 {
-    mTicks += inTimeSpan.mTicks;
+    _ticks += timeSpan._ticks;
     return *this;
 }
 
-TimeSpan& TimeSpan::operator-=(const TimeSpan& inTimeSpan)
+TimeSpan& TimeSpan::operator-=(const TimeSpan& timeSpan)
 {
-    mTicks -= inTimeSpan.mTicks;
+    _ticks -= timeSpan._ticks;
     return *this;
 }
 
-bool TimeSpan::operator==(const TimeSpan& inTimeSpan) const
+bool TimeSpan::operator==(const TimeSpan& timeSpan) const
 {
-    return mTicks == inTimeSpan.mTicks;
+    return _ticks == timeSpan._ticks;
 }
 
-bool TimeSpan::operator!=(const TimeSpan& inTimeSpan) const
+bool TimeSpan::operator!=(const TimeSpan& timeSpan) const
 {
-    return mTicks != inTimeSpan.mTicks;
+    return _ticks != timeSpan._ticks;
 }
 
-bool TimeSpan::operator<(const TimeSpan& inTimeSpan) const
+bool TimeSpan::operator<(const TimeSpan& timeSpan) const
 {
-    return mTicks < inTimeSpan.mTicks;
+    return _ticks < timeSpan._ticks;
 }
 
-bool TimeSpan::operator<=(const TimeSpan& inTimeSpan) const
+bool TimeSpan::operator<=(const TimeSpan& timeSpan) const
 {
-    return mTicks <= inTimeSpan.mTicks;
+    return _ticks <= timeSpan._ticks;
 }
 
-bool TimeSpan::operator>(const TimeSpan& inTimeSpan) const
+bool TimeSpan::operator>(const TimeSpan& timeSpan) const
 {
-    return mTicks > inTimeSpan.mTicks;
+    return _ticks > timeSpan._ticks;
 }
 
-bool TimeSpan::operator>=(const TimeSpan& inTimeSpan) const
+bool TimeSpan::operator>=(const TimeSpan& timeSpan) const
 {
-    return mTicks >= inTimeSpan.mTicks;
+    return _ticks >= timeSpan._ticks;
 }
 
-const TimeSpan TimeSpan::operator+(const TimeSpan& inTimeSpan) const
+const TimeSpan TimeSpan::operator+(const TimeSpan& timeSpan) const
 {
-    return TimeSpan(mTicks + inTimeSpan.mTicks);
+    return TimeSpan(_ticks + timeSpan._ticks);
 }
 
-const TimeSpan TimeSpan::operator-(const TimeSpan& inTimeSpan) const
+const TimeSpan TimeSpan::operator-(const TimeSpan& timeSpan) const
 {
-    return TimeSpan(mTicks - inTimeSpan.mTicks);
+    return TimeSpan(_ticks - timeSpan._ticks);
 }
 
 const TimeSpan TimeSpan::operator-() const
 {
-    return TimeSpan(-mTicks);
+    return TimeSpan(-_ticks);
 }
 
 int64_t TimeSpan::Microseconds() const
 {
-    return mTicks / TicksPerMicrosecond;
+    return _ticks / TicksPerMicrosecond;
 }
 
 int64_t TimeSpan::Milliseconds() const
 {
-    return mTicks / TicksPerMillisecond;
+    return _ticks / TicksPerMillisecond;
 }
 
 int64_t TimeSpan::Seconds() const
 {
-    return mTicks / TicksPerSecond;
+    return _ticks / TicksPerSecond;
 }
 
 int64_t TimeSpan::Minutes() const
 {
-    return mTicks / TicksPerMinute;
+    return _ticks / TicksPerMinute;
 }
 
 int64_t TimeSpan::Hours() const
 {
-    return mTicks / TicksPerHour;
+    return _ticks / TicksPerHour;
 }
 
 int64_t TimeSpan::Days() const
 {
-    return mTicks / TicksPerDay;
+    return _ticks / TicksPerDay;
 }
 
 int64_t TimeSpan::Weeks() const
 {
-    return mTicks / TicksPerWeek;
+    return _ticks / TicksPerWeek;
 }
 
-const TimeSpan TimeSpan::FromNanoseconds(int64_t inNanoseconds)
+const TimeSpan TimeSpan::FromNanoseconds(int64_t nanoseconds)
 {
-    return TimeSpan(inNanoseconds / NanosecondsPerTick);
+    return TimeSpan(nanoseconds / NanosecondsPerTick);
 }
 
-const TimeSpan TimeSpan::FromMicroseconds(int64_t inMicroseconds)
+const TimeSpan TimeSpan::FromMicroseconds(int64_t microseconds)
 {
-    return TimeSpan(inMicroseconds * TicksPerMicrosecond);
+    return TimeSpan(microseconds * TicksPerMicrosecond);
 }
 
-const TimeSpan TimeSpan::FromMilliseconds(int64_t inMilliseconds)
+const TimeSpan TimeSpan::FromMilliseconds(int64_t milliseconds)
 {
-    return TimeSpan(inMilliseconds * TicksPerMillisecond);
+    return TimeSpan(milliseconds * TicksPerMillisecond);
 }
 
-const TimeSpan TimeSpan::FromSeconds(int64_t inSeconds)
+const TimeSpan TimeSpan::FromSeconds(int64_t seconds)
 {
-    return TimeSpan(inSeconds * TicksPerSecond);
+    return TimeSpan(seconds * TicksPerSecond);
 }
 
-const TimeSpan TimeSpan::FromMinutes(int64_t inMinutes)
+const TimeSpan TimeSpan::FromMinutes(int64_t minutes)
 {
-    return TimeSpan(inMinutes * TicksPerMinute);
+    return TimeSpan(minutes * TicksPerMinute);
 }
 
-const TimeSpan TimeSpan::FromHours(int64_t inHours)
+const TimeSpan TimeSpan::FromHours(int64_t hours)
 {
-    return TimeSpan(inHours * TicksPerHour);
+    return TimeSpan(hours * TicksPerHour);
 }
 
-const TimeSpan TimeSpan::FromDays(int64_t inDays)
+const TimeSpan TimeSpan::FromDays(int64_t days)
 {
-    return TimeSpan(inDays * TicksPerDay);
+    return TimeSpan(days * TicksPerDay);
 }
 
-const TimeSpan TimeSpan::FromWeeks(int64_t inWeeks)
+const TimeSpan TimeSpan::FromWeeks(int64_t weeks)
 {
-    return TimeSpan(inWeeks * TicksPerWeek);
+    return TimeSpan(weeks * TicksPerWeek);
 }

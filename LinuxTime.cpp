@@ -1,9 +1,9 @@
 #include "DateTime.hpp"
 #include <ctime>
 
-void Sleep(TimeSpan inTimeSpan)
+void Sleep(TimeSpan timeSpan)
 {
-    usleep(inTimeSpan.Microseconds());
+    usleep(timeSpan.Microseconds());
 }
 
 const DateTime GetNativeTime()

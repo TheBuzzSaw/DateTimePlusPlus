@@ -11,16 +11,22 @@ static const int64_t DaysPerFourCenturies = DaysPerYear * 400 + 97;
 static const int64_t DaysPerCentury = DaysPerYear * 100 + 24;
 static const int64_t DaysPerFourYears = DaysPerYear * 4 + 1;
 
-DateTime::DateTime() : mTicks(0)
+DateTime::DateTime() : _ticks(0)
 {
 }
 
-DateTime::DateTime(int64_t inTicks) : mTicks(inTicks)
+DateTime::DateTime(int64_t ticks) : _ticks(ticks)
 {
     Validate();
 }
 
-DateTime::DateTime(const DateTime& inDateTime) : mTicks(inDateTime.mTicks)
+DateTime::DateTime(int year, int month, int day, int hour, int minute,
+    int second, int millisecond, int microsecond) : _ticks(0)
+{
+    Set(year, month, day, hour, minute, second, millisecond, microsecond);
+}
+
+DateTime::DateTime(const DateTime& dateTime) : _ticks(dateTime._ticks)
 {
 }
 
@@ -30,126 +36,126 @@ DateTime::~DateTime()
 
 void DateTime::Validate()
 {
-    if (mTicks < 0) mTicks = 0;
+    if (_ticks < 0) _ticks = 0;
 }
 
-int64_t DateTime::ExtractYears(int64_t& inDays) const
+int64_t DateTime::ExtractYears(int64_t& days) const
 {
-    int64_t outYear = 1;
+    int64_t year = 1;
 
-    if (inDays >= DaysPerFourCenturies)
+    if (days >= DaysPerFourCenturies)
     {
-        int64_t chunks = inDays / DaysPerFourCenturies;
-        outYear += chunks * 400;
-        inDays -= chunks * DaysPerFourCenturies;
+        int64_t chunks = days / DaysPerFourCenturies;
+        year += chunks * 400;
+        days -= chunks * DaysPerFourCenturies;
     }
 
-    if (inDays >= DaysPerCentury)
+    if (days >= DaysPerCentury)
     {
-        int64_t chunks = inDays / DaysPerCentury;
+        int64_t chunks = days / DaysPerCentury;
         if (chunks == 4) chunks = 3;
-        outYear += chunks * 100;
-        inDays -= chunks * DaysPerCentury;
+        year += chunks * 100;
+        days -= chunks * DaysPerCentury;
     }
 
-    if (inDays >= DaysPerFourYears)
+    if (days >= DaysPerFourYears)
     {
-        int64_t chunks = inDays / DaysPerFourYears;
-        outYear += chunks * 4;
-        inDays -= chunks * DaysPerFourYears;
+        int64_t chunks = days / DaysPerFourYears;
+        year += chunks * 4;
+        days -= chunks * DaysPerFourYears;
     }
 
-    if (inDays >= DaysPerYear)
+    if (days >= DaysPerYear)
     {
-        int64_t chunks = inDays / DaysPerYear;
+        int64_t chunks = days / DaysPerYear;
         if (chunks == 4) chunks = 3;
-        outYear += chunks;
-        inDays -= chunks * DaysPerYear;
+        year += chunks;
+        days -= chunks * DaysPerYear;
     }
 
-    return outYear;
+    return year;
 }
 
-int64_t DateTime::ExtractMonth(int64_t& inDays, int inYear) const
+int64_t DateTime::ExtractMonth(int64_t& days, int year) const
 {
-    int64_t outMonth = 1;
+    int64_t month = 1;
 
-    for (int64_t daysInMonth = DaysInMonth(outMonth, inYear);
-        inDays > daysInMonth; daysInMonth = DaysInMonth(outMonth, inYear))
+    for (int64_t daysInMonth = DaysInMonth(month, year);
+        days > daysInMonth; daysInMonth = DaysInMonth(month, year))
     {
-        ++outMonth;
-        inDays -= daysInMonth;
+        ++month;
+        days -= daysInMonth;
     }
 
-    return outMonth;
+    return month;
 }
 
 const TimeSpan DateTime::TimeSinceMidnight() const
 {
-    return TimeSpan(mTicks % TicksPerDay);
+    return TimeSpan(_ticks % TicksPerDay);
 }
 
-void DateTime::SetTimeToMidnight()
+const DateTime DateTime::DateOnly() const
 {
-    mTicks /= TicksPerDay;
-    mTicks *= TicksPerDay;
+    int64_t ticks = _ticks / TicksPerDay;
+    return DateTime(ticks * TicksPerDay);
 }
 
-bool DateTime::Set(int inYear, int inMonth, int inDay, int inHour, int inMinute,
-    int inSecond, int inMillisecond, int inMicrosecond)
+bool DateTime::Set(int year, int month, int day, int hour, int minute,
+    int second, int millisecond, int microsecond)
 {
-    bool outSuccess = false;
+    bool isValidDate = false;
 
-    if (inYear >= 1 && inYear <= 9999
-        && inDay >= 1 && inDay <= DaysInMonth(inMonth, inYear)
-        && inHour >= 0 && inHour <= 23
-        && inMinute >= 0 && inMinute <= 59
-        && inSecond >= 0 && inSecond <= 59
-        && inMillisecond >= 0 && inMillisecond <= 999
-        && inMicrosecond >= 0 && inMicrosecond <= 999)
+    if (year >= 1 && year <= 9999
+        && day >= 1 && day <= DaysInMonth(month, year)
+        && hour >= 0 && hour <= 23
+        && minute >= 0 && minute <= 59
+        && second >= 0 && second <= 59
+        && millisecond >= 0 && millisecond <= 999
+        && microsecond >= 0 && microsecond <= 999)
     {
-        int64_t days = inDay - 1;
+        int64_t days = day - 1;
 
-        for (int i = 1; i < inMonth; ++i)
-            days += DaysInMonth(i, inYear);
+        for (int i = 1; i < month; ++i)
+            days += DaysInMonth(i, year);
 
-        int64_t year = inYear - 1;
+        --year;
         days += (year * DaysPerYear) + (year / 4) - (year / 100) + (year / 400);
 
-        mTicks = days * TicksPerDay;
-        mTicks += inHour * TicksPerHour;
-        mTicks += inMinute * TicksPerMinute;
-        mTicks += inSecond * TicksPerSecond;
-        mTicks += inMillisecond * TicksPerMillisecond;
-        mTicks += inMicrosecond * TicksPerMicrosecond;
+        _ticks = days * TicksPerDay;
+        _ticks += hour * TicksPerHour;
+        _ticks += minute * TicksPerMinute;
+        _ticks += second * TicksPerSecond;
+        _ticks += millisecond * TicksPerMillisecond;
+        _ticks += microsecond * TicksPerMicrosecond;
 
-        outSuccess = true;
+        isValidDate = true;
     }
 
-    return outSuccess;
+    return isValidDate;
 }
 
 int DateTime::DayOfWeek() const
 {
-    return (mTicks / TicksPerDay) % 7;
+    return (_ticks / TicksPerDay) % 7;
 }
 
 int DateTime::Year() const
 {
-    int64_t days = mTicks / TicksPerDay;
+    int64_t days = _ticks / TicksPerDay;
     return ExtractYears(days);
 }
 
 int DateTime::Month() const
 {
-    int64_t days = mTicks / TicksPerDay;
+    int64_t days = _ticks / TicksPerDay;
     int64_t year = ExtractYears(days);
     return ExtractMonth(days, year);
 }
 
 int DateTime::Day() const
 {
-    int64_t days = mTicks / TicksPerDay;
+    int64_t days = _ticks / TicksPerDay;
     int64_t year = ExtractYears(days);
     ExtractMonth(days, year);
     return days + 1;
@@ -157,172 +163,184 @@ int DateTime::Day() const
 
 int DateTime::Hour() const
 {
-    int64_t hours = mTicks / TicksPerHour;
+    int64_t hours = _ticks / TicksPerHour;
     return hours % 24;
 }
 
 int DateTime::Minute() const
 {
-    int64_t minutes = mTicks / TicksPerMinute;
+    int64_t minutes = _ticks / TicksPerMinute;
     return minutes % 60;
 }
 
 int DateTime::Second() const
 {
-    int64_t seconds = mTicks / TicksPerSecond;
+    int64_t seconds = _ticks / TicksPerSecond;
     return seconds % 60;
 }
 
 int DateTime::Millisecond() const
 {
-    int64_t milliseconds = mTicks / TicksPerMillisecond;
+    int64_t milliseconds = _ticks / TicksPerMillisecond;
     return milliseconds % 1000;
 }
 
 int DateTime::Microsecond() const
 {
-    int64_t microseconds = mTicks / TicksPerMicrosecond;
+    int64_t microseconds = _ticks / TicksPerMicrosecond;
     return microseconds % 1000;
 }
 
-DateTime& DateTime::operator=(const DateTime& inDateTime)
+DateTime& DateTime::operator=(const DateTime& dateTime)
 {
-    mTicks = inDateTime.mTicks;
+    _ticks = dateTime._ticks;
     return *this;
 }
 
-DateTime& DateTime::operator+=(const TimeSpan& inTimeSpan)
+DateTime& DateTime::operator+=(const TimeSpan& timeSpan)
 {
-    mTicks += inTimeSpan.Ticks();
+    _ticks += timeSpan.Ticks();
     Validate();
     return *this;
 }
 
-DateTime& DateTime::operator-=(const TimeSpan& inTimeSpan)
+DateTime& DateTime::operator-=(const TimeSpan& timeSpan)
 {
-    mTicks -= inTimeSpan.Ticks();
+    _ticks -= timeSpan.Ticks();
     Validate();
     return *this;
 }
 
-bool DateTime::operator==(const DateTime& inDateTime) const
+bool DateTime::operator==(const DateTime& dateTime) const
 {
-    return mTicks == inDateTime.mTicks;
+    return _ticks == dateTime._ticks;
 }
 
-bool DateTime::operator!=(const DateTime& inDateTime) const
+bool DateTime::operator!=(const DateTime& dateTime) const
 {
-    return mTicks != inDateTime.mTicks;
+    return _ticks != dateTime._ticks;
 }
 
-bool DateTime::operator<(const DateTime& inDateTime) const
+bool DateTime::operator<(const DateTime& dateTime) const
 {
-    return mTicks < inDateTime.mTicks;
+    return _ticks < dateTime._ticks;
 }
 
-bool DateTime::operator<=(const DateTime& inDateTime) const
+bool DateTime::operator<=(const DateTime& dateTime) const
 {
-    return mTicks <= inDateTime.mTicks;
+    return _ticks <= dateTime._ticks;
 }
 
-bool DateTime::operator>(const DateTime& inDateTime) const
+bool DateTime::operator>(const DateTime& dateTime) const
 {
-    return mTicks > inDateTime.mTicks;
+    return _ticks > dateTime._ticks;
 }
 
-bool DateTime::operator>=(const DateTime& inDateTime) const
+bool DateTime::operator>=(const DateTime& dateTime) const
 {
-    return mTicks >= inDateTime.mTicks;
+    return _ticks >= dateTime._ticks;
 }
 
-const DateTime DateTime::operator+(const TimeSpan& inTimeSpan) const
+const DateTime DateTime::operator+(const TimeSpan& timeSpan) const
 {
-    return DateTime(mTicks + inTimeSpan.Ticks());
+    return DateTime(_ticks + timeSpan.Ticks());
 }
 
-const DateTime DateTime::operator-(const TimeSpan& inTimeSpan) const
+const DateTime DateTime::operator-(const TimeSpan& timeSpan) const
 {
-    return DateTime(mTicks - inTimeSpan.Ticks());
+    return DateTime(_ticks - timeSpan.Ticks());
 }
 
-const TimeSpan DateTime::operator-(const DateTime& inDateTime) const
+const TimeSpan DateTime::operator-(const DateTime& dateTime) const
 {
-    return TimeSpan(mTicks - inDateTime.mTicks);
+    return TimeSpan(_ticks - dateTime._ticks);
 }
 
-int DateTime::DaysInMonth(int inMonth, int inYear)
+int DateTime::DaysInMonth(int month, int year)
 {
-    int outDays = 0;
+    int days = 0;
 
-    if (inMonth >= 1 && inMonth <= 12)
+    if (month >= 1 && month <= 12)
     {
-        outDays = DaysInMonths[inMonth];
+        days = DaysInMonths[month];
 
-        if (inMonth == 2 && IsLeapYear(inYear))
-            outDays = 29;
+        if (month == 2 && IsLeapYear(year))
+            days = 29;
     }
 
-    return outDays;
+    return days;
 }
 
-int DateTime::DaysInYear(int inYear)
+int DateTime::DaysInYear(int year)
 {
-    return IsLeapYear(inYear) ? 366 : 365;
+    return IsLeapYear(year) ? 366 : 365;
 }
 
-bool DateTime::IsLeapYear(int inYear)
+bool DateTime::IsLeapYear(int year)
 {
-    if (inYear % 4)
+    if (year % 4)
         return false;
 
-    if (inYear % 100)
+    if (year % 100)
         return true;
 
-    if (inYear % 400)
+    if (year % 400)
         return false;
 
     return true;
 }
 
-const char* DateTime::DayToString(int inDayOfWeek)
+const char* DateTime::DayToString(int dayOfWeek)
 {
-    const char* outDayName = "invalid day";
+    const char* dayName = "invalid day";
 
-    switch (inDayOfWeek)
+    switch (dayOfWeek)
     {
         case 0:
-            outDayName = "Monday";
+            dayName = "Monday";
             break;
 
         case 1:
-            outDayName = "Tuesday";
+            dayName = "Tuesday";
             break;
 
         case 2:
-            outDayName = "Wednesday";
+            dayName = "Wednesday";
             break;
 
         case 3:
-            outDayName = "Thursday";
+            dayName = "Thursday";
             break;
 
         case 4:
-            outDayName = "Friday";
+            dayName = "Friday";
             break;
 
         case 5:
-            outDayName = "Saturday";
+            dayName = "Saturday";
             break;
 
         case 6:
-            outDayName = "Sunday";
+            dayName = "Sunday";
             break;
 
         default:
             break;
     }
 
-    return outDayName;
+    return dayName;
+}
+
+static const DateTime GetDateTime(tm* timeInfo)
+{
+    int second = timeInfo->tm_sec;
+
+    // http://www.cplusplus.com/reference/clibrary/ctime/tm/
+    if (second > 59)
+        second = 59;
+
+    return DateTime(timeInfo->tm_year + 1900, timeInfo->tm_mon + 1,
+        timeInfo->tm_mday, timeInfo->tm_hour, timeInfo->tm_min, second);
 }
 
 const DateTime DateTime::LocalTime()
@@ -330,15 +348,15 @@ const DateTime DateTime::LocalTime()
     time_t rawTime;
     time(&rawTime);
     tm* timeInfo = localtime(&rawTime);
-    int second = timeInfo->tm_sec;
 
-    // http://www.cplusplus.com/reference/clibrary/ctime/tm/
-    if (second > 59)
-        second = 59;
+    return GetDateTime(timeInfo);
+}
 
-    DateTime outDateTime;
-    outDateTime.Set(timeInfo->tm_year + 1900, timeInfo->tm_mon + 1,
-        timeInfo->tm_mday, timeInfo->tm_hour, timeInfo->tm_min, second);
+const DateTime DateTime::UtcTime()
+{
+    time_t rawTime;
+    time(&rawTime);
+    tm* timeInfo = gmtime(&rawTime);
 
-    return outDateTime;
+    return GetDateTime(timeInfo);
 }

@@ -3,9 +3,9 @@
 #include <iostream>
 using namespace std;
 
-void Sleep(TimeSpan inTimeSpan)
+void Sleep(TimeSpan timeSpan)
 {
-    Sleep(inTimeSpan.Milliseconds());
+    Sleep(timeSpan.Milliseconds());
 }
 
 const DateTime GetNativeTime()
@@ -27,21 +27,21 @@ static int64_t frequency = 0;
 
 const TimeSpan RawTimer()
 {
-    TimeSpan outTimeSpan;
+    TimeSpan timeSpan;
 
     if (frequency > 0)
     {
         LARGE_INTEGER count;
         QueryPerformanceCounter(&count);
         int64_t microseconds = (count.QuadPart * 1000000) / frequency;
-        outTimeSpan = TimeSpan::FromMicroseconds(microseconds);
+        timeSpan = TimeSpan::FromMicroseconds(microseconds);
     }
     else
     {
-        outTimeSpan = TimeSpan::FromMilliseconds(GetTickCount());
+        timeSpan = TimeSpan::FromMilliseconds(GetTickCount());
     }
 
-    return outTimeSpan;
+    return timeSpan;
 }
 
 void ResetTimer()

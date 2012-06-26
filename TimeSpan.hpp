@@ -8,25 +8,25 @@ class TimeSpan
 {
     public:
         TimeSpan();
-        explicit TimeSpan(int64_t inTicks);
-        TimeSpan(const TimeSpan& inTimeSpan);
+        explicit TimeSpan(int64_t ticks);
+        TimeSpan(const TimeSpan& timeSpan);
         ~TimeSpan();
 
-        inline int64_t Ticks() const { return mTicks; }
+        inline int64_t Ticks() const { return _ticks; }
 
-        TimeSpan& operator=(const TimeSpan& inTimeSpan);
-        TimeSpan& operator+=(const TimeSpan& inTimeSpan);
-        TimeSpan& operator-=(const TimeSpan& inTimeSpan);
+        TimeSpan& operator=(const TimeSpan& timeSpan);
+        TimeSpan& operator+=(const TimeSpan& timeSpan);
+        TimeSpan& operator-=(const TimeSpan& timeSpan);
 
-        bool operator==(const TimeSpan& inTimeSpan) const;
-        bool operator!=(const TimeSpan& inTimeSpan) const;
-        bool operator<(const TimeSpan& inTimeSpan) const;
-        bool operator<=(const TimeSpan& inTimeSpan) const;
-        bool operator>(const TimeSpan& inTimeSpan) const;
-        bool operator>=(const TimeSpan& inTimeSpan) const;
+        bool operator==(const TimeSpan& timeSpan) const;
+        bool operator!=(const TimeSpan& timeSpan) const;
+        bool operator<(const TimeSpan& timeSpan) const;
+        bool operator<=(const TimeSpan& timeSpan) const;
+        bool operator>(const TimeSpan& timeSpan) const;
+        bool operator>=(const TimeSpan& timeSpan) const;
 
-        const TimeSpan operator+(const TimeSpan& inTimeSpan) const;
-        const TimeSpan operator-(const TimeSpan& inTimeSpan) const;
+        const TimeSpan operator+(const TimeSpan& timeSpan) const;
+        const TimeSpan operator-(const TimeSpan& timeSpan) const;
         const TimeSpan operator-() const;
 
         int64_t Microseconds() const;
@@ -37,43 +37,42 @@ class TimeSpan
         int64_t Days() const;
         int64_t Weeks() const;
 
-        static const TimeSpan FromNanoseconds(int64_t inNanoseconds);
-        static const TimeSpan FromMicroseconds(int64_t inMicroseconds);
-        static const TimeSpan FromMilliseconds(int64_t inMilliseconds);
-        static const TimeSpan FromSeconds(int64_t inSeconds);
-        static const TimeSpan FromMinutes(int64_t inMinutes);
-        static const TimeSpan FromHours(int64_t inHours);
-        static const TimeSpan FromDays(int64_t inDays);
-        static const TimeSpan FromWeeks(int64_t inWeeks);
+        static const TimeSpan FromNanoseconds(int64_t nanoseconds);
+        static const TimeSpan FromMicroseconds(int64_t microseconds);
+        static const TimeSpan FromMilliseconds(int64_t milliseconds);
+        static const TimeSpan FromSeconds(int64_t seconds);
+        static const TimeSpan FromMinutes(int64_t minutes);
+        static const TimeSpan FromHours(int64_t hours);
+        static const TimeSpan FromDays(int64_t days);
+        static const TimeSpan FromWeeks(int64_t weeks);
 
-    protected:
     private:
-        int64_t mTicks;
+        int64_t _ticks;
 };
 
 template<typename CharT, typename TraitsT>
 std::basic_ostream<CharT, TraitsT>& operator<<(
-    std::basic_ostream<CharT, TraitsT>& inStream, const TimeSpan& inTimeSpan)
+    std::basic_ostream<CharT, TraitsT>& inStream, const TimeSpan& timeSpan)
 {
-    int64_t count = inTimeSpan.Weeks();
+    int64_t count = timeSpan.Weeks();
     inStream << count << 'w';
 
-    count = inTimeSpan.Days() - inTimeSpan.Weeks() * 7;
+    count = timeSpan.Days() - timeSpan.Weeks() * 7;
     inStream << count << 'd';
 
-    count = inTimeSpan.Hours() - inTimeSpan.Days() * 24;
+    count = timeSpan.Hours() - timeSpan.Days() * 24;
     inStream << count << 'h';
 
-    count = inTimeSpan.Minutes() - inTimeSpan.Hours() * 60;
+    count = timeSpan.Minutes() - timeSpan.Hours() * 60;
     inStream << count << 'm';
 
-    count = inTimeSpan.Seconds() - inTimeSpan.Minutes() * 60;
+    count = timeSpan.Seconds() - timeSpan.Minutes() * 60;
     inStream << count << 's';
 
-    count = inTimeSpan.Milliseconds() - inTimeSpan.Seconds() * 1000;
+    count = timeSpan.Milliseconds() - timeSpan.Seconds() * 1000;
     inStream << count << "ms";
 
-    count = inTimeSpan.Microseconds() - inTimeSpan.Milliseconds() * 1000;
+    count = timeSpan.Microseconds() - timeSpan.Milliseconds() * 1000;
     inStream << count << "us";
 
     return inStream;
