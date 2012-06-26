@@ -1,8 +1,6 @@
 #include "DateTime.hpp"
 #include <stdint.h>
 #include <sys/time.h>
-//#include <ctime>
-//#include <mach/mach.h>
 #include <mach/mach_time.h>
 
 void Sleep(TimeSpan inTimeSpan)
@@ -23,19 +21,19 @@ const DateTime GetNativeTime()
     return epoch + TimeSpan::FromMicroseconds(microseconds);
 }
 
-static uint64_t start = 0;
+static uint64_t timerBase = 0;
 static mach_timebase_info_data_t timeBaseInfo;
 
 void ResetTimer()
 {
     mach_timebase_info(&timeBaseInfo);
-    start = mach_absolute_time();
+    timerBase = mach_absolute_time();
 }
 
 const TimeSpan ReadTimer()
 {
     uint64_t end = mach_absolute_time();
-    uint64_t elapsed = end - start;
+    uint64_t elapsed = end - timerBase;
     uint64_t nanoseconds = elapsed * timeBaseInfo.numer / timeBaseInfo.denom;
     return TimeSpan::FromNanoseconds(nanoseconds);
 }
