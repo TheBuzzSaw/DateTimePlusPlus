@@ -40,6 +40,7 @@
 		<Unit filename="TickSpans.hpp" />
 		<Unit filename="TimeSpan.cpp" />
 		<Unit filename="TimeSpan.hpp" />
+		<Unit filename="UnixTime.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

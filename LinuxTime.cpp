@@ -1,11 +1,6 @@
 #include "DateTime.hpp"
 #include <ctime>
 
-void Sleep(TimeSpan timeSpan)
-{
-    usleep(timeSpan.ToMicroseconds());
-}
-
 const DateTime GetNativeTime()
 {
     timespec ts;
