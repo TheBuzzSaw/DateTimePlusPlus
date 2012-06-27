@@ -1,12 +1,8 @@
 #include "DateTime.hpp"
-
+#include "Stopwatch.hpp"
+#include "NativeTimers.hpp"
 #include <iostream>
 using namespace std;
-
-void Sleep(TimeSpan timeSpan);
-const DateTime GetNativeTime();
-void ResetTimer();
-const TimeSpan ReadTimer();
 
 int main(int argc, char** argv)
 {
@@ -33,8 +29,12 @@ int main(int argc, char** argv)
     cout << a.Ticks() << endl;
 
     ResetTimer();
-    Sleep(TimeSpan::FromSeconds(2));
-    cout << ReadTimer() << endl;
+    Stopwatch stopwatch;
+    stopwatch.Start();
+    TimeSpan sleepTime = TimeSpan::FromSeconds(1)
+        + TimeSpan::FromMilliseconds(500);
+    Sleep(sleepTime);
+    cout << stopwatch.Elapsed() << endl;
 
     return 0;
 }
