@@ -81,7 +81,7 @@ int64_t DateTime::ExtractMonth(int64_t& days, int year) const
     int64_t month = 1;
 
     for (int64_t daysInMonth = DaysInMonth(month, year);
-        days > daysInMonth; daysInMonth = DaysInMonth(month, year))
+        days >= daysInMonth; daysInMonth = DaysInMonth(month, year))
     {
         ++month;
         days -= daysInMonth;
