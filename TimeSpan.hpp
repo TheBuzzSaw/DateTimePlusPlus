@@ -56,6 +56,10 @@ class TimeSpan
         static const TimeSpan FromDays(int64_t days);
         static const TimeSpan FromWeeks(int64_t weeks);
 
+        static const TimeSpan MinValue;
+        static const TimeSpan Zero;
+        static const TimeSpan MaxValue;
+
     private:
         int64_t _ticks;
 };

@@ -52,6 +52,9 @@ class DateTime
         static const DateTime LocalTime();
         static const DateTime UtcTime();
 
+        static const DateTime MinValue;
+        static const DateTime MaxValue;
+
     private:
         int64_t _ticks;
 };

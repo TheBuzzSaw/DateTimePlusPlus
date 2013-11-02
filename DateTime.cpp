@@ -14,6 +14,9 @@ static const int64_t DaysPerFourYears = DaysPerYear * 4 + 1;
 static const int64_t MinTickCount = 0LL;
 static const int64_t MaxTickCount = 3155378975999999999LL;
 
+const DateTime DateTime::MinValue(MinTickCount);
+const DateTime DateTime::MaxValue(MaxTickCount);
+
 static void Validate(int64_t& ticks)
 {
     if (ticks < MinTickCount)

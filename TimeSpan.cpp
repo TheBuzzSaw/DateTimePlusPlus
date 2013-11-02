@@ -1,6 +1,12 @@
 #include "TimeSpan.hpp"
 #include "TickSpans.hpp"
 
+static const int64_t LowestValue = 1LL << 63LL;
+
+const TimeSpan TimeSpan::MinValue(LowestValue);
+const TimeSpan TimeSpan::Zero(0);
+const TimeSpan TimeSpan::MaxValue(~LowestValue);
+
 TimeSpan::TimeSpan() : _ticks(0)
 {
 }

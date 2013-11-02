@@ -11,6 +11,8 @@ const TimeSpan ReadTimer();
 int main(int argc, char** argv)
 {
     cout << "size: " << sizeof(DateTime) << endl;
+    cout << "Max: " << TimeSpan::MaxValue.Ticks() << endl;
+    cout << "Min: " << TimeSpan::MinValue.Ticks() << endl;
 
     DateTime a = DateTime::LocalTime();
     DateTime b = a.Date();
