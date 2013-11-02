@@ -11,35 +11,18 @@ static const int64_t DaysPerFourCenturies = DaysPerYear * 400 + 97;
 static const int64_t DaysPerCentury = DaysPerYear * 100 + 24;
 static const int64_t DaysPerFourYears = DaysPerYear * 4 + 1;
 
-DateTime::DateTime() : _ticks(0)
+static const int64_t MinTickCount = 0LL;
+static const int64_t MaxTickCount = 3155378975999999999LL;
+
+static void Validate(int64_t& ticks)
 {
+    if (ticks < MinTickCount)
+        ticks = MinTickCount;
+    else if (ticks > MaxTickCount)
+        ticks = MaxTickCount;
 }
 
-DateTime::DateTime(int64_t ticks) : _ticks(ticks)
-{
-    Validate();
-}
-
-DateTime::DateTime(int year, int month, int day, int hour, int minute,
-    int second, int millisecond, int microsecond) : _ticks(0)
-{
-    Set(year, month, day, hour, minute, second, millisecond, microsecond);
-}
-
-DateTime::DateTime(const DateTime& dateTime) : _ticks(dateTime._ticks)
-{
-}
-
-DateTime::~DateTime()
-{
-}
-
-void DateTime::Validate()
-{
-    if (_ticks < 0) _ticks = 0;
-}
-
-int64_t DateTime::ExtractYears(int64_t& days) const
+static int64_t ExtractYears(int64_t& days)
 {
     int64_t year = 1;
 
@@ -76,12 +59,12 @@ int64_t DateTime::ExtractYears(int64_t& days) const
     return year;
 }
 
-int64_t DateTime::ExtractMonth(int64_t& days, int year) const
+static int64_t ExtractMonth(int64_t& days, int year)
 {
     int64_t month = 1;
 
-    for (int64_t daysInMonth = DaysInMonth(month, year);
-        days >= daysInMonth; daysInMonth = DaysInMonth(month, year))
+    for (int64_t daysInMonth = DateTime::DaysInMonth(month, year);
+        days >= daysInMonth; daysInMonth = DateTime::DaysInMonth(month, year))
     {
         ++month;
         days -= daysInMonth;
@@ -90,29 +73,26 @@ int64_t DateTime::ExtractMonth(int64_t& days, int year) const
     return month;
 }
 
-const TimeSpan DateTime::TimeSinceMidnight() const
+DateTime::DateTime() : _ticks(0)
 {
-    return TimeSpan(_ticks % TicksPerDay);
 }
 
-const DateTime DateTime::DateOnly() const
+DateTime::DateTime(int64_t ticks) : _ticks(ticks)
 {
-    int64_t days = _ticks / TicksPerDay;
-    return DateTime(days * TicksPerDay);
+    Validate(_ticks);
 }
 
-bool DateTime::Set(int year, int month, int day, int hour, int minute,
-    int second, int millisecond, int microsecond)
+DateTime::DateTime(int year, int month, int day, int hour, int minute,
+    int second, int millisecond, int microsecond, int ticks) : _ticks(0)
 {
-    bool isValidDate = false;
-
     if (year >= 1 && year <= 9999
         && day >= 1 && day <= DaysInMonth(month, year)
         && hour >= 0 && hour <= 23
         && minute >= 0 && minute <= 59
         && second >= 0 && second <= 59
         && millisecond >= 0 && millisecond <= 999
-        && microsecond >= 0 && microsecond <= 999)
+        && microsecond >= 0 && microsecond <= 999
+        && ticks >= 0 && ticks <= 9)
     {
         int64_t days = day - 1;
 
@@ -128,11 +108,27 @@ bool DateTime::Set(int year, int month, int day, int hour, int minute,
         _ticks += second * TicksPerSecond;
         _ticks += millisecond * TicksPerMillisecond;
         _ticks += microsecond * TicksPerMicrosecond;
-
-        isValidDate = true;
+        _ticks += ticks;
     }
+}
 
-    return isValidDate;
+DateTime::DateTime(const DateTime& dateTime) : _ticks(dateTime._ticks)
+{
+}
+
+DateTime::~DateTime()
+{
+}
+
+const TimeSpan DateTime::TimeOfDay() const
+{
+    return TimeSpan(_ticks % TicksPerDay);
+}
+
+const DateTime DateTime::Date() const
+{
+    int64_t days = _ticks / TicksPerDay;
+    return DateTime(days * TicksPerDay);
 }
 
 int DateTime::DayOfWeek() const
@@ -200,14 +196,14 @@ DateTime& DateTime::operator=(const DateTime& dateTime)
 DateTime& DateTime::operator+=(const TimeSpan& timeSpan)
 {
     _ticks += timeSpan.Ticks();
-    Validate();
+    Validate(_ticks);
     return *this;
 }
 
 DateTime& DateTime::operator-=(const TimeSpan& timeSpan)
 {
     _ticks -= timeSpan.Ticks();
-    Validate();
+    Validate(_ticks);
     return *this;
 }
 

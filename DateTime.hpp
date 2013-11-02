@@ -9,7 +9,8 @@ class DateTime
         DateTime();
         explicit DateTime(int64_t ticks);
         DateTime(int year, int month, int day, int hour = 0, int minute = 0,
-            int second = 0, int millisecond = 0, int microsecond = 0);
+            int second = 0, int millisecond = 0, int microsecond = 0,
+            int ticks = 0);
         DateTime(const DateTime& dateTime);
         ~DateTime();
 
@@ -31,11 +32,8 @@ class DateTime
         const DateTime operator-(const TimeSpan& timeSpan) const;
         const TimeSpan operator-(const DateTime& dateTime) const;
 
-        const TimeSpan TimeSinceMidnight() const;
-        const DateTime DateOnly() const;
-        bool Set(int year, int month, int day, int hour = 0,
-            int minute = 0, int second = 0, int millisecond = 0,
-            int microsecond = 0);
+        const TimeSpan TimeOfDay() const;
+        const DateTime Date() const;
 
         int DayOfWeek() const;
         int Year() const;
@@ -55,10 +53,6 @@ class DateTime
         static const DateTime UtcTime();
 
     private:
-        void Validate();
-        int64_t ExtractYears(int64_t& days) const;
-        int64_t ExtractMonth(int64_t& days, int year) const;
-
         int64_t _ticks;
 };
 
