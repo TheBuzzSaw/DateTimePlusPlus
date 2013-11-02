@@ -115,7 +115,7 @@ DateTime::DateTime(int year, int month, int day, int hour, int minute,
     }
 }
 
-DateTime::DateTime(const DateTime& dateTime) : _ticks(dateTime._ticks)
+DateTime::DateTime(const DateTime& other) : _ticks(other._ticks)
 {
 }
 
@@ -190,9 +190,9 @@ int DateTime::Microsecond() const
     return microseconds % 1000;
 }
 
-DateTime& DateTime::operator=(const DateTime& dateTime)
+DateTime& DateTime::operator=(const DateTime& other)
 {
-    _ticks = dateTime._ticks;
+    _ticks = other._ticks;
     return *this;
 }
 
@@ -210,34 +210,34 @@ DateTime& DateTime::operator-=(const TimeSpan& timeSpan)
     return *this;
 }
 
-bool DateTime::operator==(const DateTime& dateTime) const
+bool DateTime::operator==(const DateTime& other) const
 {
-    return _ticks == dateTime._ticks;
+    return _ticks == other._ticks;
 }
 
-bool DateTime::operator!=(const DateTime& dateTime) const
+bool DateTime::operator!=(const DateTime& other) const
 {
-    return _ticks != dateTime._ticks;
+    return _ticks != other._ticks;
 }
 
-bool DateTime::operator<(const DateTime& dateTime) const
+bool DateTime::operator<(const DateTime& other) const
 {
-    return _ticks < dateTime._ticks;
+    return _ticks < other._ticks;
 }
 
-bool DateTime::operator<=(const DateTime& dateTime) const
+bool DateTime::operator<=(const DateTime& other) const
 {
-    return _ticks <= dateTime._ticks;
+    return _ticks <= other._ticks;
 }
 
-bool DateTime::operator>(const DateTime& dateTime) const
+bool DateTime::operator>(const DateTime& other) const
 {
-    return _ticks > dateTime._ticks;
+    return _ticks > other._ticks;
 }
 
-bool DateTime::operator>=(const DateTime& dateTime) const
+bool DateTime::operator>=(const DateTime& other) const
 {
-    return _ticks >= dateTime._ticks;
+    return _ticks >= other._ticks;
 }
 
 const DateTime DateTime::operator+(const TimeSpan& timeSpan) const
@@ -250,9 +250,9 @@ const DateTime DateTime::operator-(const TimeSpan& timeSpan) const
     return DateTime(_ticks - timeSpan.Ticks());
 }
 
-const TimeSpan DateTime::operator-(const DateTime& dateTime) const
+const TimeSpan DateTime::operator-(const DateTime& other) const
 {
-    return TimeSpan(_ticks - dateTime._ticks);
+    return TimeSpan(_ticks - other._ticks);
 }
 
 int DateTime::DaysInMonth(int month, int year)
