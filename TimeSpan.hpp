@@ -18,6 +18,7 @@ class TimeSpan
     public:
         TimeSpan();
         explicit TimeSpan(int64_t ticks);
+        TimeSpan(int hour, int minute, int second);
         TimeSpan(const TimeSpan& other);
         ~TimeSpan();
 

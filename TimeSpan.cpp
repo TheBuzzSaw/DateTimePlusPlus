@@ -15,6 +15,18 @@ TimeSpan::TimeSpan(int64_t ticks) : _ticks(ticks)
 {
 }
 
+TimeSpan::TimeSpan(int hour, int minute, int second) : _ticks(0)
+{
+    if (hour >= 0 && hour <= 23
+        && minute >= 0 && minute <= 59
+        && second >= 0 && second <= 59)
+    {
+        _ticks += hour * TicksPerHour;
+        _ticks += minute * TicksPerMinute;
+        _ticks += second * TicksPerSecond;
+    }
+}
+
 TimeSpan::TimeSpan(const TimeSpan& other) : _ticks(other._ticks)
 {
 }
