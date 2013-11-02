@@ -18,24 +18,24 @@ class TimeSpan
     public:
         TimeSpan();
         explicit TimeSpan(int64_t ticks);
-        TimeSpan(const TimeSpan& timeSpan);
+        TimeSpan(const TimeSpan& other);
         ~TimeSpan();
 
         inline int64_t Ticks() const { return _ticks; }
 
-        TimeSpan& operator=(const TimeSpan& timeSpan);
-        TimeSpan& operator+=(const TimeSpan& timeSpan);
-        TimeSpan& operator-=(const TimeSpan& timeSpan);
+        TimeSpan& operator=(const TimeSpan& other);
+        TimeSpan& operator+=(const TimeSpan& other);
+        TimeSpan& operator-=(const TimeSpan& other);
 
-        bool operator==(const TimeSpan& timeSpan) const;
-        bool operator!=(const TimeSpan& timeSpan) const;
-        bool operator<(const TimeSpan& timeSpan) const;
-        bool operator<=(const TimeSpan& timeSpan) const;
-        bool operator>(const TimeSpan& timeSpan) const;
-        bool operator>=(const TimeSpan& timeSpan) const;
+        bool operator==(const TimeSpan& other) const;
+        bool operator!=(const TimeSpan& other) const;
+        bool operator<(const TimeSpan& other) const;
+        bool operator<=(const TimeSpan& other) const;
+        bool operator>(const TimeSpan& other) const;
+        bool operator>=(const TimeSpan& other) const;
 
-        const TimeSpan operator+(const TimeSpan& timeSpan) const;
-        const TimeSpan operator-(const TimeSpan& timeSpan) const;
+        const TimeSpan operator+(const TimeSpan& other) const;
+        const TimeSpan operator-(const TimeSpan& other) const;
         const TimeSpan operator-() const;
 
         int64_t ToNanoseconds() const;

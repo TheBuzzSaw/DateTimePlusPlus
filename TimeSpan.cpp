@@ -15,7 +15,7 @@ TimeSpan::TimeSpan(int64_t ticks) : _ticks(ticks)
 {
 }
 
-TimeSpan::TimeSpan(const TimeSpan& timeSpan) : _ticks(timeSpan._ticks)
+TimeSpan::TimeSpan(const TimeSpan& other) : _ticks(other._ticks)
 {
 }
 
@@ -23,62 +23,62 @@ TimeSpan::~TimeSpan()
 {
 }
 
-TimeSpan& TimeSpan::operator=(const TimeSpan& timeSpan)
+TimeSpan& TimeSpan::operator=(const TimeSpan& other)
 {
-    _ticks = timeSpan._ticks;
+    _ticks = other._ticks;
     return *this;
 }
 
-TimeSpan& TimeSpan::operator+=(const TimeSpan& timeSpan)
+TimeSpan& TimeSpan::operator+=(const TimeSpan& other)
 {
-    _ticks += timeSpan._ticks;
+    _ticks += other._ticks;
     return *this;
 }
 
-TimeSpan& TimeSpan::operator-=(const TimeSpan& timeSpan)
+TimeSpan& TimeSpan::operator-=(const TimeSpan& other)
 {
-    _ticks -= timeSpan._ticks;
+    _ticks -= other._ticks;
     return *this;
 }
 
-bool TimeSpan::operator==(const TimeSpan& timeSpan) const
+bool TimeSpan::operator==(const TimeSpan& other) const
 {
-    return _ticks == timeSpan._ticks;
+    return _ticks == other._ticks;
 }
 
-bool TimeSpan::operator!=(const TimeSpan& timeSpan) const
+bool TimeSpan::operator!=(const TimeSpan& other) const
 {
-    return _ticks != timeSpan._ticks;
+    return _ticks != other._ticks;
 }
 
-bool TimeSpan::operator<(const TimeSpan& timeSpan) const
+bool TimeSpan::operator<(const TimeSpan& other) const
 {
-    return _ticks < timeSpan._ticks;
+    return _ticks < other._ticks;
 }
 
-bool TimeSpan::operator<=(const TimeSpan& timeSpan) const
+bool TimeSpan::operator<=(const TimeSpan& other) const
 {
-    return _ticks <= timeSpan._ticks;
+    return _ticks <= other._ticks;
 }
 
-bool TimeSpan::operator>(const TimeSpan& timeSpan) const
+bool TimeSpan::operator>(const TimeSpan& other) const
 {
-    return _ticks > timeSpan._ticks;
+    return _ticks > other._ticks;
 }
 
-bool TimeSpan::operator>=(const TimeSpan& timeSpan) const
+bool TimeSpan::operator>=(const TimeSpan& other) const
 {
-    return _ticks >= timeSpan._ticks;
+    return _ticks >= other._ticks;
 }
 
-const TimeSpan TimeSpan::operator+(const TimeSpan& timeSpan) const
+const TimeSpan TimeSpan::operator+(const TimeSpan& other) const
 {
-    return TimeSpan(_ticks + timeSpan._ticks);
+    return TimeSpan(_ticks + other._ticks);
 }
 
-const TimeSpan TimeSpan::operator-(const TimeSpan& timeSpan) const
+const TimeSpan TimeSpan::operator-(const TimeSpan& other) const
 {
-    return TimeSpan(_ticks - timeSpan._ticks);
+    return TimeSpan(_ticks - other._ticks);
 }
 
 const TimeSpan TimeSpan::operator-() const
