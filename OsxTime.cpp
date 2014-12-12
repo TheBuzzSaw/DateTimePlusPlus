@@ -3,7 +3,7 @@
 #include <sys/time.h>
 #include <mach/mach_time.h>
 
-void Sleep(TimeSpan timeSpan)
+void Sleep(const TimeSpan timeSpan)
 {
     usleep(timeSpan.ToMicroseconds());
 }

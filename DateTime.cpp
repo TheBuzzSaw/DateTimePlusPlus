@@ -1,5 +1,4 @@
 #include "DateTime.hpp"
-#include "TickSpans.hpp"
 #include <ctime>
 
 static const int DaysInMonths[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
@@ -76,26 +75,30 @@ static int64_t ExtractMonth(int64_t& days, int year)
     return month;
 }
 
-DateTime::DateTime() : _ticks(0)
-{
-}
-
 DateTime::DateTime(int64_t ticks) : _ticks(ticks)
 {
     Validate(_ticks);
 }
 
-DateTime::DateTime(int year, int month, int day, int hour, int minute,
-    int second, int millisecond, int microsecond, int ticks) : _ticks(0)
+DateTime::DateTime(
+    int year,
+    int month,
+    int day,
+    int hour,
+    int minute,
+    int second,
+    int millisecond,
+    int microsecond,
+    int ticks)
 {
-    if (year >= 1 && year <= 9999
-        && day >= 1 && day <= DaysInMonth(month, year)
-        && hour >= 0 && hour <= 23
-        && minute >= 0 && minute <= 59
-        && second >= 0 && second <= 59
-        && millisecond >= 0 && millisecond <= 999
-        && microsecond >= 0 && microsecond <= 999
-        && ticks >= 0 && ticks <= 9)
+    if (1 <= year && year <= 9999
+        && 1 <= day && day <= DaysInMonth(month, year)
+        && 0 <= hour && hour <= 23
+        && 0 <= minute && minute <= 59
+        && 0 <= second && second <= 59
+        && 0 <= millisecond && millisecond <= 999
+        && 0 <= microsecond && microsecond <= 999
+        && 0 <= ticks && ticks <= 9)
     {
         int64_t days = day - 1;
 
@@ -113,19 +116,10 @@ DateTime::DateTime(int year, int month, int day, int hour, int minute,
         _ticks += microsecond * TicksPerMicrosecond;
         _ticks += ticks;
     }
-}
-
-DateTime::DateTime(const DateTime& other) : _ticks(other._ticks)
-{
-}
-
-DateTime::~DateTime()
-{
-}
-
-const TimeSpan DateTime::TimeOfDay() const
-{
-    return TimeSpan(_ticks % TicksPerDay);
+    else
+    {
+        _ticks = 0;
+    }
 }
 
 const DateTime DateTime::Date() const
@@ -190,12 +184,6 @@ int DateTime::Microsecond() const
     return microseconds % 1000;
 }
 
-DateTime& DateTime::operator=(const DateTime& other)
-{
-    _ticks = other._ticks;
-    return *this;
-}
-
 DateTime& DateTime::operator+=(const TimeSpan& timeSpan)
 {
     _ticks += timeSpan.Ticks();
@@ -208,36 +196,6 @@ DateTime& DateTime::operator-=(const TimeSpan& timeSpan)
     _ticks -= timeSpan.Ticks();
     Validate(_ticks);
     return *this;
-}
-
-bool DateTime::operator==(const DateTime& other) const
-{
-    return _ticks == other._ticks;
-}
-
-bool DateTime::operator!=(const DateTime& other) const
-{
-    return _ticks != other._ticks;
-}
-
-bool DateTime::operator<(const DateTime& other) const
-{
-    return _ticks < other._ticks;
-}
-
-bool DateTime::operator<=(const DateTime& other) const
-{
-    return _ticks <= other._ticks;
-}
-
-bool DateTime::operator>(const DateTime& other) const
-{
-    return _ticks > other._ticks;
-}
-
-bool DateTime::operator>=(const DateTime& other) const
-{
-    return _ticks >= other._ticks;
 }
 
 const DateTime DateTime::operator+(const TimeSpan& timeSpan) const
@@ -316,8 +274,13 @@ static const DateTime GetDateTime(tm* timeInfo)
     if (second > 59)
         second = 59;
 
-    return DateTime(timeInfo->tm_year + 1900, timeInfo->tm_mon + 1,
-        timeInfo->tm_mday, timeInfo->tm_hour, timeInfo->tm_min, second);
+    return DateTime(
+        timeInfo->tm_year + 1900,
+        timeInfo->tm_mon + 1,
+        timeInfo->tm_mday,
+        timeInfo->tm_hour,
+        timeInfo->tm_min,
+        second);
 }
 
 const DateTime DateTime::LocalTime()

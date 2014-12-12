@@ -6,33 +6,67 @@
 class DateTime
 {
     public:
-        DateTime();
+        constexpr DateTime() : _ticks(0) {}
         explicit DateTime(int64_t ticks);
-        DateTime(int year, int month, int day, int hour = 0, int minute = 0,
-            int second = 0, int millisecond = 0, int microsecond = 0,
+        DateTime(
+            int year,
+            int month,
+            int day,
+            int hour = 0,
+            int minute = 0,
+            int second = 0,
+            int millisecond = 0,
+            int microsecond = 0,
             int ticks = 0);
-        DateTime(const DateTime& other);
-        ~DateTime();
+        DateTime(const DateTime& other) = default;
+        ~DateTime() = default;
 
-        inline int64_t Ticks() const { return _ticks; }
-        inline operator bool() const { return _ticks > 0; }
+        constexpr int64_t Ticks() const { return _ticks; }
+        constexpr operator bool() const { return _ticks > 0; }
 
-        DateTime& operator=(const DateTime& other);
+        DateTime& operator=(const DateTime& other) = default;
         DateTime& operator+=(const TimeSpan& timeSpan);
         DateTime& operator-=(const TimeSpan& timeSpan);
 
-        bool operator==(const DateTime& other) const;
-        bool operator!=(const DateTime& other) const;
-        bool operator<(const DateTime& other) const;
-        bool operator<=(const DateTime& other) const;
-        bool operator>(const DateTime& other) const;
-        bool operator>=(const DateTime& other) const;
+        constexpr bool operator==(const DateTime& other) const
+        {
+            return _ticks == other._ticks;
+        }
+
+        constexpr bool operator!=(const DateTime& other) const
+        {
+            return _ticks != other._ticks;
+        }
+
+        constexpr bool operator<(const DateTime& other) const
+        {
+            return _ticks < other._ticks;
+        }
+
+        constexpr bool operator<=(const DateTime& other) const
+        {
+            return _ticks <= other._ticks;
+        }
+
+        constexpr bool operator>(const DateTime& other) const
+        {
+            return _ticks > other._ticks;
+        }
+
+        constexpr bool operator>=(const DateTime& other) const
+        {
+            return _ticks >= other._ticks;
+        }
 
         const DateTime operator+(const TimeSpan& timeSpan) const;
         const DateTime operator-(const TimeSpan& timeSpan) const;
         const TimeSpan operator-(const DateTime& other) const;
 
-        const TimeSpan TimeOfDay() const;
+        constexpr const TimeSpan TimeOfDay() const
+        {
+            return TimeSpan(_ticks % TicksPerDay);
+        }
+
         const DateTime Date() const;
 
         int DayOfWeek() const;
@@ -61,7 +95,8 @@ class DateTime
 
 template<typename CharT, typename TraitsT>
 std::basic_ostream<CharT, TraitsT>& operator<<(
-    std::basic_ostream<CharT, TraitsT>& stream, const DateTime& dateTime)
+    std::basic_ostream<CharT, TraitsT>& stream,
+    const DateTime& dateTime)
 {
     stream << dateTime.Year() << '-' << dateTime.Month() << '-'
         << dateTime.Day() << ' ';

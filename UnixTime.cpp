@@ -1,7 +1,7 @@
 #include "TimeSpan.hpp"
 #include <ctime>
 
-void Sleep(TimeSpan timeSpan)
+void Sleep(const TimeSpan timeSpan)
 {
     timespec ts = {};
     ts.tv_sec = timeSpan.ToSeconds();

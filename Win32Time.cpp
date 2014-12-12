@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-void Sleep(TimeSpan timeSpan)
+void Sleep(const TimeSpan timeSpan)
 {
     Sleep(timeSpan.ToMilliseconds());
 }
