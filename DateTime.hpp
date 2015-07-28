@@ -6,30 +6,6 @@
 constexpr int64_t MinTickCount = 0LL;
 constexpr int64_t MaxTickCount = 3155378975999999999LL;
 
-template<typename T>
-constexpr T Min(const T& a, const T& b)
-{
-    return b < a ? b : a;
-}
-
-template<typename T>
-constexpr T Max(const T& a, const T& b)
-{
-    return a < b ? b : a;
-}
-
-template<typename T>
-constexpr T Bound(const T& value, const T& low, const T& high)
-{
-    return Min(Max(value, low), high);
-}
-
-template<typename T>
-constexpr bool InRange(const T& value, const T& low, const T& high)
-{
-    return low <= value && value <= high;
-}
-
 constexpr int64_t SafeTicks(int64_t ticks)
 {
     return Bound(ticks, MinTickCount, MaxTickCount);
@@ -110,24 +86,60 @@ class DateTime
             return TimeSpan(_ticks % TicksPerDay);
         }
 
-        const DateTime Date() const;
+        constexpr DateTime Date() const
+        {
+            return DateTime((_ticks / TicksPerDay) * TicksPerDay);
+        }
 
-        int DayOfWeek() const;
+        constexpr int DayOfWeek() const
+        {
+            return (_ticks / TicksPerDay) % 7;
+        }
+
         int Year() const;
         int Month() const;
         int Day() const;
-        int Hour() const;
-        int Minute() const;
-        int Second() const;
-        int Millisecond() const;
-        int Microsecond() const;
+
+        constexpr int Hour() const
+        {
+            return (_ticks / TicksPerHour) % 24;
+        }
+
+        constexpr int Minute() const
+        {
+            return (_ticks / TicksPerMinute) % 60;
+        }
+
+        constexpr int Second() const
+        {
+            return (_ticks / TicksPerSecond) % 60;
+        }
+
+        constexpr int Millisecond() const
+        {
+            return (_ticks / TicksPerMillisecond) % 1000;
+        }
+
+        constexpr int Microsecond() const
+        {
+            return (_ticks / TicksPerMicrosecond) % 1000;
+        }
 
         static int DaysInMonth(int month, int year = 1);
-        static int DaysInYear(int year);
-        static bool IsLeapYear(int year);
+
         static const char* DayToString(int dayOfWeek);
         static const DateTime LocalTime();
         static const DateTime UtcTime();
+
+        static constexpr bool IsLeapYear(int year)
+        {
+            return !(year % 4) && ((year % 100) || !(year % 400));
+        }
+
+        static constexpr int DaysInYear(int year)
+        {
+            return 365 + IsLeapYear(year);
+        }
 
         static constexpr DateTime MinValue()
         {

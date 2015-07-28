@@ -2,14 +2,13 @@
 
 TimeSpan::TimeSpan(int hour, int minute, int second)
 {
-    if (0 <= hour && hour <= 23
-        && 0 <= minute && minute <= 59
-        && 0 <= second && second <= 59)
+    if (InRange(hour, 0, 23) &&
+        InRange(minute, 0, 59) &&
+        InRange(second, 0, 59))
     {
-        _ticks
-            = hour * TicksPerHour
-            + minute * TicksPerMinute
-            + second * TicksPerSecond;
+        _ticks = hour * TicksPerHour +
+            minute * TicksPerMinute +
+            second * TicksPerSecond;
     }
     else
     {

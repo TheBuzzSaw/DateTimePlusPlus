@@ -104,17 +104,6 @@ DateTime::DateTime(
     }
 }
 
-const DateTime DateTime::Date() const
-{
-    int64_t days = _ticks / TicksPerDay;
-    return DateTime(days * TicksPerDay);
-}
-
-int DateTime::DayOfWeek() const
-{
-    return (_ticks / TicksPerDay) % 7;
-}
-
 int DateTime::Year() const
 {
     int64_t days = _ticks / TicksPerDay;
@@ -134,36 +123,6 @@ int DateTime::Day() const
     int64_t year = ExtractYears(days);
     ExtractMonth(days, year);
     return days + 1;
-}
-
-int DateTime::Hour() const
-{
-    int64_t hours = _ticks / TicksPerHour;
-    return hours % 24;
-}
-
-int DateTime::Minute() const
-{
-    int64_t minutes = _ticks / TicksPerMinute;
-    return minutes % 60;
-}
-
-int DateTime::Second() const
-{
-    int64_t seconds = _ticks / TicksPerSecond;
-    return seconds % 60;
-}
-
-int DateTime::Millisecond() const
-{
-    int64_t milliseconds = _ticks / TicksPerMillisecond;
-    return milliseconds % 1000;
-}
-
-int DateTime::Microsecond() const
-{
-    int64_t microseconds = _ticks / TicksPerMicrosecond;
-    return microseconds % 1000;
 }
 
 DateTime& DateTime::operator+=(const TimeSpan& timeSpan)
@@ -191,22 +150,6 @@ int DateTime::DaysInMonth(int month, int year)
     }
 
     return days;
-}
-
-int DateTime::DaysInYear(int year)
-{
-    return 365 + IsLeapYear(year);
-}
-
-bool DateTime::IsLeapYear(int year)
-{
-    if (year % 4)
-        return false;
-
-    if (year % 100)
-        return true;
-
-    return !(year % 400);
 }
 
 const char* DateTime::DayToString(int dayOfWeek)
